@@ -1,0 +1,18 @@
+.btn {
+  transition: transform .35s cubic-bezier(.22,1,.36,1);
+}
+
+.btn:active {
+  transform: scale(.92);
+}
+
+.skill,
+.social,
+.card {
+  transition: transform .4s cubic-bezier(.22,1,.36,1);
+}
+
+.skill:hover,
+.social:hover {
+  transform: translateY(-8px) scale(1.02);
+}

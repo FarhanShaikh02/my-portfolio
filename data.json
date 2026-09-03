@@ -1,0 +1,27 @@
+{
+  "home": {
+    "name": "Farhan Shaikh",
+    "about": "My name is md rihan",
+    "photo": "/uploads/profile.jpg"
+  },
+  "about": {
+    "title": "About Me",
+    "description": "My name is md farhan"
+  },
+  "skills": [],
+  "projects": [],
+  "gallery": [],
+  "social": {
+    "instagram": "https://www.instagram.com/farhan_shaikh02_?igsi=MTltaGw3YjQ3Z2FocA==",
+    "youtube": "https://youtube.com/@farhan_shaikh02-t9c?si=320RquZ4ge-EJDzL",
+    "other": ""
+  },
+  "contact": {
+    "email": "mdfarhan847203@gmail.com",
+    "phone": "+918676883755"
+  },
+  "settings": {
+    "siteTitle": "FARHAN SHAIKH",
+    "theme": "light"
+  }
+}

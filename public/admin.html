@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Farhan | Admin Panel</title>
+
+<style>
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
+
+body{
+    font-family:Arial,sans-serif;
+    background:#050505;
+    color:white;
+    min-height:100vh;
+    padding:30px 15px;
+}
+
+.container{
+    width:100%;
+    max-width:700px;
+    margin:auto;
+}
+
+h1{
+    font-size:35px;
+    margin-bottom:8px;
+}
+
+.subtitle{
+    color:#777;
+    margin-bottom:30px;
+}
+
+.panel{
+    background:#ffffff08;
+    border:1px solid #ffffff12;
+    border-radius:25px;
+    padding:25px;
+    backdrop-filter:blur(15px);
+}
+
+label{
+    display:block;
+    color:#aaa;
+    font-size:14px;
+    margin:20px 0 8px;
+}
+
+input,
+textarea{
+    width:100%;
+    padding:14px;
+    border-radius:12px;
+    border:1px solid #ffffff15;
+    outline:none;
+    background:#ffffff08;
+    color:white;
+    font-size:15px;
+}
+
+textarea{
+    min-height:140px;
+    resize:vertical;
+}
+
+input:focus,
+textarea:focus{
+    border-color:#8175ff;
+}
+
+.photo-box{
+    text-align:center;
+    margin:10px 0 25px;
+}
+
+#preview{
+    width:150px;
+    height:150px;
+    object-fit:cover;
+    border-radius:50%;
+    border:3px solid #8175ff;
+    display:block;
+    margin:0 auto 15px;
+    background:#151515;
+}
+
+.file{
+    display:inline-block;
+    padding:12px 18px;
+    border-radius:25px;
+    background:#ffffff0d;
+    border:1px solid #ffffff15;
+    cursor:pointer;
+}
+
+.file input{
+    display:none;
+}
+
+button{
+    width:100%;
+    margin-top:30px;
+    padding:16px;
+    border:0;
+    border-radius:30px;
+    color:white;
+    font-size:16px;
+    font-weight:bold;
+    cursor:pointer;
+    background:linear-gradient(135deg,#7567ff,#00aaa5);
+}
+
+button:active{
+    transform:scale(.98);
+}
+
+#status{
+    text-align:center;
+    margin-top:18px;
+    color:#00cec9;
+}
+
+.back{
+    display:inline-block;
+    color:#aaa;
+    text-decoration:none;
+    margin-top:25px;
+}
+
+.back:hover{
+    color:white;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>⚙️ Admin Panel</h1>
+<p class="subtitle">Manage your portfolio website</p>
+
+<div class="panel">
+
+<div class="photo-box">
+
+<img id="preview" src="" alt="Profile">
+
+<label class="file">
+📸 Choose Profile Photo
+<input type="file" id="photo" accept="image/*">
+</label>
+
+</div>
+
+<label>Your Name</label>
+<input id="name" type="text" placeholder="Your name">
+
+<label>About Me</label>
+<textarea id="about" placeholder="Write something about yourself"></textarea>
+
+<label>Instagram Link</label>
+<input id="instagram" type="url" placeholder="https://instagram.com/...">
+
+<label>YouTube Link</label>
+<input id="youtube" type="url" placeholder="https://youtube.com/...">
+
+<button onclick="saveAll()">
+💾 Save Changes
+</button>
+
+<div id="status"></div>
+
+</div>
+
+<a class="back" href="/">← Back to Website</a>
+
+</div>
+
+<script>
+
+let currentData = {};
+
+async function loadData(){
+
+    try{
+
+        const response = await fetch("/api/data");
+        currentData = await response.json();
+
+        document.getElementById("name").value =
+            currentData.name || "";
+
+        document.getElementById("about").value =
+            currentData.about || "";
+
+        document.getElementById("instagram").value =
+            currentData.instagram || "";
+
+        document.getElementById("youtube").value =
+            currentData.youtube || "";
+
+        if(currentData.photo){
+
+            document.getElementById("preview").src =
+                currentData.photo + "?t=" + Date.now();
+
+        }
+
+    }catch(error){
+
+        document.getElementById("status").textContent =
+            "❌ Could not load data";
+
+    }
+}
+
+
+document.getElementById("photo").addEventListener("change", function(){
+
+    const file = this.files[0];
+
+    if(file){
+
+        const reader = new FileReader();
+
+        reader.onload = function(e){
+
+            document.getElementById("preview").src =
+                e.target.result;
+
+        };
+
+        reader.readAsDataURL(file);
+    }
+
+});
+
+
+async function saveAll(){
+
+    const status = document.getElementById("status");
+
+    status.textContent = "Saving...";
+
+    try{
+
+        const updatedData = {
+
+            name:
+                document.getElementById("name").value,
+
+            about:
+                document.getElementById("about").value,
+
+            instagram:
+                document.getElementById("instagram").value,
+
+            youtube:
+                document.getElementById("youtube").value,
+
+            photo:
+                currentData.photo || ""
+
+        };
+
+
+        /*
+        SAVE TEXT DATA
+        */
+
+        const response = await fetch("/api/data", {
+
+            method:"POST",
+
+            headers:{
+                "Content-Type":"application/json"
+            },
+
+            body:JSON.stringify(updatedData)
+
+        });
+
+
+        if(!response.ok)
+            throw new Error();
+
+
+        /*
+        UPLOAD PHOTO
+        */
+
+        const file =
+            document.getElementById("photo").files[0];
+
+
+        if(file){
+
+            const formData = new FormData();
+
+            formData.append("photo",file);
+
+
+            const upload =
+                await fetch("/api/photo",{
+
+                    method:"POST",
+
+                    body:formData
+
+                });
+
+
+            const result =
+                await upload.json();
+
+
+            if(result.success){
+
+                currentData.photo =
+                    result.photo;
+
+            }
+
+        }
+
+
+        status.textContent =
+            "✅ Changes saved successfully!";
+
+    }catch(error){
+
+        status.textContent =
+            "❌ Something went wrong";
+
+    }
+
+}
+
+
+loadData();
+
+</script>
+
+</body>
+</html>

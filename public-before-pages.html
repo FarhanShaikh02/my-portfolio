@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Farhan Shaikh</title>
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+    font-family:Arial,sans-serif;
+    background:#050505;
+    color:white;
+    overflow-x:hidden;
+}
+body:before{
+    content:"";
+    position:fixed;
+    width:500px;height:500px;
+    background:#6c5ce7;
+    filter:blur(180px);
+    opacity:.18;
+    top:-200px;left:-180px;
+    z-index:-1;
+}
+nav{
+    position:fixed;
+    top:0;left:0;width:100%;
+    padding:20px 7%;
+    display:flex;
+    justify-content:space-between;
+    backdrop-filter:blur(15px);
+    background:#05050599;
+    border-bottom:1px solid #ffffff12;
+    z-index:10;
+}
+.logo{font-size:22px;font-weight:bold}
+.logo span{color:#8b7cff}
+nav a{
+    color:#aaa;
+    text-decoration:none;
+    margin-left:20px;
+}
+nav a:hover{color:white}
+
+.hero{
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    padding:100px 20px;
+}
+.profile{
+    width:150px;height:150px;
+    border-radius:50%;
+    margin:auto auto 25px;
+    object-fit:cover;
+    background:linear-gradient(135deg,#8b7cff,#00cec9);
+    padding:4px;
+    display:block;
+}
+h1{
+    font-size:clamp(45px,9vw,80px);
+    margin-bottom:20px;
+}
+.gradient{
+    background:linear-gradient(90deg,#fff,#8b7cff,#00cec9);
+    -webkit-background-clip:text;
+    color:transparent;
+}
+.hero p{
+    max-width:650px;
+    margin:auto;
+    color:#999;
+    font-size:18px;
+    line-height:1.7;
+}
+.btn{
+    display:inline-block;
+    margin:30px 6px 0;
+    padding:14px 24px;
+    border-radius:30px;
+    text-decoration:none;
+    color:white;
+    background:#ffffff0d;
+    border:1px solid #ffffff1a;
+}
+.btn.primary{
+    background:linear-gradient(135deg,#7567ff,#00aaa5);
+}
+section{padding:100px 7%}
+.container{max-width:1100px;margin:auto}
+.title{font-size:42px;margin-bottom:12px}
+.sub{color:#777;margin-bottom:35px}
+.card{
+    padding:30px;
+    border-radius:25px;
+    background:#ffffff08;
+    border:1px solid #ffffff10;
+    backdrop-filter:blur(15px);
+    color:#aaa;
+    line-height:1.8;
+}
+.skills,.socials{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+    gap:18px;
+}
+.skill,.social{
+    padding:25px;
+    border-radius:20px;
+    background:#ffffff07;
+    border:1px solid #ffffff10;
+    transition:.3s;
+}
+.skill:hover,.social:hover{
+    transform:translateY(-7px);
+    border-color:#7c6cff;
+}
+.skill p,.social span{
+    color:#777;
+    font-size:14px;
+    margin-top:8px;
+}
+.social{
+    text-decoration:none;
+    color:white;
+}
+footer{
+    text-align:center;
+    padding:40px;
+    color:#555;
+    border-top:1px solid #ffffff0d;
+}
+@media(max-width:600px){
+    nav div:last-child{display:none}
+    section{padding:75px 5%}
+}
+</style>
+</head>
+
+<body>
+
+<nav>
+    <div class="logo">Farhan<span>.</span></div>
+    <div>
+        <a href="#about">About</a>
+        <a href="#skills">Skills</a>
+        <a href="#social">Social</a>
+    </div>
+</nav>
+
+<section class="hero">
+    <div>
+        <img id="profile" class="profile" src="" alt="Farhan">
+
+        <h1>
+            Hi, I'm<br>
+            <span id="name" class="gradient">Farhan Shaikh</span>
+        </h1>
+
+        <p id="heroText">
+            Developer, creator and technology enthusiast.
+        </p>
+
+        <a href="#about" class="btn primary">Explore My World ↓</a>
+        <a id="instagramTop" href="#" target="_blank" class="btn">Instagram ↗</a>
+    <a href="#skills" class="btn">My Skills ↓</a>
+<a href="#social" class="btn">Contact Me ↗</a>
+</div>
+</section>
+
+<section id="about">
+<div class="container">
+    <h2 class="title">About Me</h2>
+    <p class="sub">A little bit about me.</p>
+
+    <div class="card" id="aboutText">
+        Loading...
+    </div>
+</div>
+</section>
+
+<section id="skills">
+<div class="container">
+    <h2 class="title">What I Do</h2>
+    <p class="sub">Things I'm interested in.</p>
+
+    <div class="skills">
+        <div class="skill">
+            <h3>💻 Web Development</h3>
+            <p>Building modern websites and digital experiences.</p>
+        </div>
+
+        <div class="skill">
+            <h3>🎨 Creative Design</h3>
+            <p>Exploring UI, animations and visual ideas.</p>
+        </div>
+
+        <div class="skill">
+            <h3>🎬 Content Creation</h3>
+            <p>Creating digital content and experimenting with ideas.</p>
+        </div>
+
+        <div class="skill">
+            <h3>🚀 Technology</h3>
+            <p>Learning new technologies and improving every day.</p>
+        </div>
+    </div>
+</div>
+</section>
+
+<div id="skillModal" class="modal"><div class="modalBox"><button class="close" onclick="closeSkill()">×</button><div id="modalIcon"></div><h2 id="modalTitle"></h2><p id="modalText"></p><p id="modalTech"></p></div></div>
+
+<section id="social">
+<div class="container">
+    <h2 class="title">Find Me Online</h2>
+    <p class="sub">Let's connect.</p>
+
+    <div class="socials">
+
+        <a id="instagram" class="social" href="#" target="_blank">
+            📸 Instagram
+            <span id="instagramName">@farhan_shaikh02_</span>
+        </a>
+
+        <a id="youtube" class="social" href="#" target="_blank">
+            ▶️ YouTube
+            <span>Farhan Shaikh</span>
+        </a>
+
+    </div>
+</div>
+</section>
+
+<footer>
+    © 2026 Farhan Shaikh • Built with code.
+</footer>
+
+<script>
+async function loadData(){
+    try{
+        const response = await fetch("/api/data");
+        const data = await response.json();
+
+        document.getElementById("name").textContent =
+            data.name || "Farhan Shaikh";
+
+        document.getElementById("aboutText").textContent =
+            data.about || "";
+
+        document.getElementById("instagram").href =
+            data.instagram || "#";
+
+        document.getElementById("instagramTop").href =
+            data.instagram || "#";
+
+        document.getElementById("youtube").href =
+            data.youtube || "#";
+
+        if(data.photo){
+            document.getElementById("profile").src =
+                data.photo + "?t=" + Date.now();
+        }
+    }catch(error){
+        console.log(error);
+    }
+}
+
+loadData();
+</script>
+
+</body>

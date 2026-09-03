@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Farhan Admin</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#070707;color:#fff;font-family:Arial,sans-serif;padding:25px}
+h1{margin-bottom:25px}
+.panel{max-width:800px;margin:auto}
+.card{background:#111;border:1px solid #292929;border-radius:20px;padding:20px;margin-bottom:20px}
+label{display:block;margin:15px 0 7px;color:#aaa}
+input,textarea{width:100%;padding:13px;border-radius:12px;border:1px solid #333;background:#181818;color:white}
+textarea{min-height:120px;resize:vertical}
+button{margin-top:18px;padding:13px 20px;border:0;border-radius:25px;background:#7567ff;color:white;font-weight:bold}
+</style>
+</head>
+<body>
+<div class="panel">
+
+<h1>⚙️ Website Admin</h1>
+
+<div class="card">
+<h2>🏠 Home</h2>
+
+<label>Name</label>
+<input id="name">
+
+<label>Tagline</label>
+<input id="tagline">
+
+<label>Hero Description</label>
+<textarea id="hero"></textarea>
+
+<label>Profile Photo</label>
+<input id="photo" type="file" accept="image/*">
+
+<button onclick="saveHome()">💾 Save Home</button>
+</div>
+
+<div class="card">
+<h2>👤 About</h2>
+
+<label>About Text</label>
+<textarea id="about"></textarea>
+
+<button onclick="saveAbout()">💾 Save About</button>
+</div>
+<div class="card">
+<h2>🔗 Social Links</h2>
+
+<label>Instagram</label>
+<input id="instagram">
+
+<label>YouTube</label>
+<input id="youtube">
+
+<label>GitHub</label>
+<input id="github">
+
+<label>Twitter / X</label>
+<input id="twitter">
+
+<button onclick="saveSocial()">💾 Save Social</button>
+</div>
+
+<div class="card">
+<h2>📞 Contact</h2>
+
+<label>Email</label>
+<input id="email">
+
+<label>WhatsApp Number</label>
+<input id="phone">
+
+<label>Contact Message</label>
+<textarea id="message"></textarea>
+
+<button onclick="saveContact()">💾 Save Contact</button>
+</div>
+
+<div class="card">
+<h2>👁️ Sections</h2>
+
+<label><input type="checkbox" id="showAbout"> Show About</label>
+<label><input type="checkbox" id="showSkills"> Show Skills</label>
+<label><input type="checkbox" id="showProjects"> Show Projects</label>
+<label><input type="checkbox" id="showGallery"> Show Gallery</label>
+<label><input type="checkbox" id="showContact"> Show Contact</label>
+
+<button onclick="saveSettings()">💾 Save Visibility</button>
+</div>
+<script>
+let data={};
+
+async function load(){
+  const r=await fetch("/api/data");
+  const d=await r.json();
+  data=d;
+
+  name.value=d.name||"";
+  about.value=d.about||"";
+  instagram.value=d.instagram||"";
+  youtube.value=d.youtube||"";
+}
+
+async function save(payload){
+  const r=await fetch("/api/data",{
+    method:"POST",
+    headers:{"Content-Type":"application/json"},
+    body:JSON.stringify(payload)
+  });
+
+  if(r.ok) alert("✅ Saved!");
+  else alert("❌ Save failed");
+}
+
+function saveHome(){
+  save({
+    name:name.value,
+    about:about.value,
+    instagram:instagram.value,
+    youtube:youtube.value
+  });
+}
+
+function saveAbout(){
+  save({
+    name:name.value,
+    about:about.value,
+    instagram:instagram.value,
+    youtube:youtube.value
+  });
+}
+
+function saveSocial(){
+  save({
+    name:name.value,
+    about:about.value,
+    instagram:instagram.value,
+    youtube:youtube.value
+  });
+}
+
+function saveContact(){
+  alert("Contact editor will be connected in the next step.");
+}
+
+function saveSettings(){
+  alert("Section controls will be connected in the next step.");
+}
+
+load();
+</script>
+
+</div>
+</body>
+</html>
