@@ -1,27 +1,48 @@
 {
   "home": {
     "name": "Farhan Shaikh",
-    "about": "My name is md rihan",
-    "photo": "/uploads/profile.jpg"
+    "about": "​Hi, I'm Farhan Shaikh 👋\n​Life Science Student | Digital Creator | Storyteller\n\n​Who I Am\n\n​I am a Life Science student at Maulana Azad National Urdu University (MANUU), Hyderabad, originally from Darbhanga, Bihar. My journey is a blend of scientific curiosity, digital creativity, and grounded values. Whether I am learning biological concepts in the lab or creating engaging stories and digital content, I bring passion, discipline, and authenticity to everything I do.\n\n​What I Do\n\n​🔬 Life Science & Research\nMy academic focus is on understanding the fundamental principles of life, including biology, genetics, evolution, and related areas. I enjoy practical learning, laboratory work, and making complex scientific concepts easier to understand.\n\n​🎬 Creative Expression & Media\nBeyond academics, I am passionate about storytelling, creative writing, and digital media. From creating scripts rooted in local culture and humor to producing engaging visual content, I use digital media as a way to express ideas and build my creative identity.\n\n​📈 Personal Growth & Exploration\nI believe in continuous learning and self-improvement. I enjoy exploring digital trends, modern media tools, technology, and new creative ideas while developing my skills along the way.\n\n​My Philosophy\n\n​\"Learning, growing, and trusting the process.\"\n\n​My approach to life is guided by faith, patience (Sabr), and consistent effort. I believe true growth comes from balancing education, creativity, and personal development while staying connected to my roots.\n\n​Let’s Connect\n\n​I am always open to learning, collaborating, exploring creative opportunities, and connecting with fellow science enthusiasts and content creators.",
+    "photo": "/uploads/profile.jpg",
+    "headline": ""
   },
   "about": {
     "title": "About Me",
-    "description": "My name is md farhan"
+    "description": "I'm gay"
   },
-  "skills": [],
+  "skills": [
+    "Developer ",
+    "Social media management ",
+    "Video Editing",
+    "Photo editing ",
+    "Ai content creation ",
+    "YouTube content creation"
+  ],
   "projects": [],
   "gallery": [],
   "social": {
     "instagram": "https://www.instagram.com/farhan_shaikh02_?igsi=MTltaGw3YjQ3Z2FocA==",
     "youtube": "https://youtube.com/@farhan_shaikh02-t9c?si=320RquZ4ge-EJDzL",
-    "other": ""
+    "other": "",
+    "github": "",
+    "linkedin": ""
   },
   "contact": {
     "email": "mdfarhan847203@gmail.com",
-    "phone": "+918676883755"
+    "phone": "",
+    "message": ""
   },
   "settings": {
     "siteTitle": "FARHAN SHAIKH",
     "theme": "light"
-  }
+  },
+  "education": [
+    {
+      "course": "B.sc Life Science ",
+      "college": "Molana azaad national urdu university ",
+      "year": "2026-2030"
+    }
+  ],
+  "achievements": [],
+  "certificates": [],
+  "services": []
 }
