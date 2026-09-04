@@ -611,7 +611,7 @@ function setLink(id, url) {
 
 async function loadWebsite() {
   try {
-    const response = await fetch("/api/full-data", {
+    const response = await fetch("/data.json", {
       cache: "no-store"
     });
 
