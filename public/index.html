@@ -716,16 +716,55 @@ async function loadWebsite() {
       ]
     );
 
-    /* GALLERY */
-    renderList(
-      "galleryGrid",
-      data.gallery,
-      [
-        "Photos",
-        "Videos",
-        "Creative Work"
-      ]
-    );
+/* GALLERY */
+function renderGallery(list) {
+  const box = $("galleryGrid");
+  if (!box) return;
+
+  box.replaceChildren();
+
+  if (!Array.isArray(list) || !list.length) return;
+
+  list.forEach(item => {
+    const url = typeof item === "string" ? item : item?.url;
+    const type = typeof item === "object" ? item?.type : "";
+
+    if (!url) return;
+
+    const card = document.createElement("div");
+    card.className = "card";
+
+    const isVideo =
+      type === "video" ||
+      /\.(mp4|webm|ogg|mov|m4v)(\?|$)/i.test(url);
+
+    if (isVideo) {
+      const video = document.createElement("video");
+      video.src = url;
+      video.controls = true;
+      video.playsInline = true;
+      video.style.width = "100%";
+      video.style.borderRadius = "18px";
+      video.style.display = "block";
+
+      card.appendChild(video);
+    } else {
+      const img = document.createElement("img");
+      img.src = url;
+      img.alt = "Gallery";
+      img.loading = "lazy";
+      img.style.width = "100%";
+      img.style.borderRadius = "18px";
+      img.style.display = "block";
+
+      card.appendChild(img);
+    }
+
+    box.appendChild(card);
+  });
+}
+
+renderGallery(data.gallery);
 
     /* SERVICES */
     renderList(
