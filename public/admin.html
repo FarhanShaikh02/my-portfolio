@@ -1,159 +1,2034 @@
-<!DOCTYPE html>
-<html>
+cd ~/my-portfolio
+cat > public/admin.html <<'EOF'
+<!doctype html>
+<html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#eef2ff">
 <title>Farhan Admin</title>
+
 <style>
 *{box-sizing:border-box}
-body{margin:0;background:#070707;color:#fff;font-family:Arial,sans-serif;padding:25px}
-h1{margin-bottom:25px}
-.panel{max-width:800px;margin:auto}
-.card{background:#111;border:1px solid #292929;border-radius:20px;padding:20px;margin-bottom:20px}
-label{display:block;margin:15px 0 7px;color:#aaa}
-input,textarea{width:100%;padding:13px;border-radius:12px;border:1px solid #333;background:#181818;color:white}
-textarea{min-height:120px;resize:vertical}
-button{margin-top:18px;padding:13px 20px;border:0;border-radius:25px;background:#7567ff;color:white;font-weight:bold}
+
+:root{
+  --bg:#eef1f8;
+  --text:#17171a;
+  --muted:#74757d;
+  --glass:rgba(255,255,255,.58);
+  --glass2:rgba(255,255,255,.78);
+  --border:rgba(255,255,255,.72);
+  --line:rgba(0,0,0,.07);
+  --shadow:0 20px 60px rgba(38,42,61,.12);
+  --blue:#007aff;
+  --red:#ff3b30;
+  --green:#34c759;
+}
+
+html{scroll-behavior:smooth}
+
+body{
+  margin:0;
+  min-height:100vh;
+  color:var(--text);
+  font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","SF Pro Text","Segoe UI",sans-serif;
+  background:
+    radial-gradient(circle at 8% 8%,rgba(120,150,255,.25),transparent 30%),
+    radial-gradient(circle at 92% 18%,rgba(255,170,210,.25),transparent 28%),
+    radial-gradient(circle at 50% 100%,rgba(100,220,255,.18),transparent 35%),
+    var(--bg);
+  overflow-x:hidden;
+}
+
+/* ---------- LIQUID BACKGROUND ---------- */
+
+body:before,
+body:after{
+  content:"";
+  position:fixed;
+  width:280px;
+  height:280px;
+  border-radius:50%;
+  filter:blur(55px);
+  pointer-events:none;
+  z-index:-1;
+  animation:floatOrb 9s ease-in-out infinite alternate;
+}
+
+body:before{
+  background:rgba(92,132,255,.20);
+  top:18%;
+  left:-100px;
+}
+
+body:after{
+  background:rgba(255,120,190,.17);
+  right:-100px;
+  bottom:12%;
+  animation-delay:-4s;
+}
+
+@keyframes floatOrb{
+  from{transform:translate3d(0,0,0) scale(1)}
+  to{transform:translate3d(35px,-25px,0) scale(1.12)}
+}
+
+/* ---------- HEADER ---------- */
+
+header{
+  position:sticky;
+  top:12px;
+  z-index:100;
+  padding:0 14px;
+}
+
+.top{
+  max-width:1180px;
+  height:64px;
+  margin:auto;
+  padding:8px 10px 8px 17px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+
+  background:rgba(255,255,255,.48);
+  border:1px solid rgba(255,255,255,.78);
+  border-radius:25px;
+
+  backdrop-filter:blur(30px) saturate(180%);
+  -webkit-backdrop-filter:blur(30px) saturate(180%);
+
+  box-shadow:
+    0 12px 40px rgba(30,35,55,.12),
+    inset 0 1px 0 rgba(255,255,255,.9);
+}
+
+.logo{
+  display:flex;
+  align-items:center;
+  gap:9px;
+  font-size:16px;
+  font-weight:800;
+  letter-spacing:-.3px;
+}
+
+.logoIcon{
+  width:36px;
+  height:36px;
+  display:grid;
+  place-items:center;
+  border-radius:12px;
+  background:rgba(255,255,255,.7);
+  box-shadow:
+    inset 0 1px 1px rgba(255,255,255,.95),
+    0 5px 15px rgba(0,0,0,.08);
+}
+
+.status{
+  display:flex;
+  align-items:center;
+  gap:7px;
+  padding:9px 14px;
+  border-radius:999px;
+  background:rgba(255,255,255,.55);
+  border:1px solid rgba(255,255,255,.75);
+  color:var(--muted);
+  font-size:12px;
+  font-weight:750;
+  transition:
+    transform .45s cubic-bezier(.22,1,.36,1),
+    background .3s ease,
+    color .3s ease;
+}
+
+.status.saving{
+  background:rgba(255,204,0,.18);
+  color:#a56a00;
+}
+
+.status.saved{
+  background:rgba(52,199,89,.16);
+  color:#16853a;
+  animation:pop .55s cubic-bezier(.22,1,.36,1);
+}
+
+.status.unsaved{
+  background:rgba(255,59,48,.13);
+  color:#d42f27;
+}
+
+.status.error{
+  background:rgba(255,59,48,.18);
+  color:#c82018;
+  animation:shake .4s ease;
+}
+
+@keyframes pop{
+  0%{transform:scale(.82)}
+  60%{transform:scale(1.08)}
+  100%{transform:scale(1)}
+}
+
+@keyframes shake{
+  20%{transform:translateX(-5px)}
+  40%{transform:translateX(5px)}
+  60%{transform:translateX(-3px)}
+  80%{transform:translateX(3px)}
+}
+
+/* ---------- MAIN ---------- */
+
+main{
+  width:min(1180px,calc(100% - 28px));
+  margin:auto;
+  padding:35px 0 150px;
+}
+
+.hero{
+  padding:25px 8px 28px;
+  animation:heroIn .8s cubic-bezier(.22,1,.36,1);
+}
+
+.heroEyebrow{
+  color:var(--blue);
+  font-size:13px;
+  font-weight:800;
+  margin-bottom:8px;
+}
+
+.hero h1{
+  margin:0;
+  font-size:clamp(38px,7vw,68px);
+  line-height:.98;
+  letter-spacing:-4px;
+  font-weight:850;
+}
+
+.hero p{
+  margin:13px 0 0;
+  color:var(--muted);
+  font-size:15px;
+}
+
+@keyframes heroIn{
+  from{
+    opacity:0;
+    transform:translateY(25px);
+  }
+  to{
+    opacity:1;
+    transform:none;
+  }
+}
+
+/* ---------- NAV ---------- */
+
+.navShell{
+  position:relative;
+  margin-bottom:25px;
+}
+
+.tabs{
+  display:flex;
+  gap:7px;
+  overflow-x:auto;
+  padding:7px;
+  scrollbar-width:none;
+
+  background:rgba(255,255,255,.38);
+  border:1px solid rgba(255,255,255,.7);
+  border-radius:25px;
+
+  backdrop-filter:blur(28px) saturate(170%);
+  -webkit-backdrop-filter:blur(28px) saturate(170%);
+
+  box-shadow:
+    0 14px 45px rgba(35,40,60,.10),
+    inset 0 1px 0 rgba(255,255,255,.85);
+}
+
+.tabs::-webkit-scrollbar{display:none}
+
+.tabs button{
+  position:relative;
+  flex:0 0 auto;
+  border:0;
+  padding:11px 15px;
+  border-radius:17px;
+  background:transparent;
+  color:#686970;
+  font:inherit;
+  font-size:13px;
+  font-weight:750;
+  cursor:pointer;
+
+  transition:
+    transform .5s cubic-bezier(.22,1,.36,1),
+    color .3s ease,
+    background .35s ease,
+    box-shadow .35s ease;
+}
+
+.tabs button:hover{
+  transform:translateY(-1px);
+  color:var(--text);
+}
+
+.tabs button:active{
+  transform:scale(.92);
+}
+
+.tabs button.active{
+  color:#111;
+  background:rgba(255,255,255,.76);
+  box-shadow:
+    0 7px 22px rgba(30,35,50,.12),
+    inset 0 1px 0 rgba(255,255,255,.95);
+}
+
+/* ---------- PANELS ---------- */
+
+.panel{
+  display:none;
+}
+
+.panel.active{
+  display:block;
+  animation:panelIn .65s cubic-bezier(.22,1,.36,1);
+}
+
+@keyframes panelIn{
+  from{
+    opacity:0;
+    transform:translateY(18px) scale(.985);
+  }
+  to{
+    opacity:1;
+    transform:none;
+  }
+}
+
+/* ---------- GLASS CARDS ---------- */
+
+.card{
+  position:relative;
+  overflow:hidden;
+  padding:25px;
+  margin-bottom:17px;
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(255,255,255,.68),
+      rgba(255,255,255,.42)
+    );
+
+  border:1px solid rgba(255,255,255,.78);
+  border-radius:29px;
+
+  backdrop-filter:blur(30px) saturate(170%);
+  -webkit-backdrop-filter:blur(30px) saturate(170%);
+
+  box-shadow:
+    0 22px 65px rgba(35,40,60,.11),
+    inset 0 1px 0 rgba(255,255,255,.9),
+    inset 0 -1px 0 rgba(255,255,255,.25);
+
+  transition:
+    transform .5s cubic-bezier(.22,1,.36,1),
+    box-shadow .5s ease;
+}
+
+.card:before{
+  content:"";
+  position:absolute;
+  top:0;
+  left:18%;
+  width:45%;
+  height:1px;
+  background:rgba(255,255,255,.95);
+  filter:blur(.2px);
+}
+
+.card:hover{
+  box-shadow:
+    0 28px 75px rgba(35,40,60,.14),
+    inset 0 1px 0 rgba(255,255,255,.95);
+}
+
+.card h2{
+  margin:0 0 21px;
+  font-size:21px;
+  letter-spacing:-.6px;
+}
+
+/* ---------- FORMS ---------- */
+
+.grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:15px;
+}
+
+label{
+  display:block;
+  margin:14px 4px 7px;
+  color:#74757d;
+  font-size:11px;
+  font-weight:800;
+  text-transform:uppercase;
+  letter-spacing:.45px;
+}
+
+input,
+textarea,
+select{
+  width:100%;
+  border:1px solid rgba(0,0,0,.07);
+  outline:none;
+
+  color:var(--text);
+  background:rgba(255,255,255,.52);
+
+  border-radius:17px;
+  padding:14px 15px;
+
+  font:inherit;
+  font-size:14px;
+
+  box-shadow:
+    inset 0 1px 2px rgba(0,0,0,.025),
+    0 1px 0 rgba(255,255,255,.7);
+
+  transition:
+    transform .35s cubic-bezier(.22,1,.36,1),
+    border-color .25s ease,
+    background .25s ease,
+    box-shadow .35s ease;
+}
+
+input:hover,
+textarea:hover,
+select:hover{
+  background:rgba(255,255,255,.72);
+}
+
+input:focus,
+textarea:focus,
+select:focus{
+  background:rgba(255,255,255,.86);
+  border-color:rgba(0,122,255,.42);
+
+  box-shadow:
+    0 0 0 4px rgba(0,122,255,.09),
+    0 8px 22px rgba(0,80,180,.07);
+
+  transform:translateY(-1px);
+}
+
+textarea{
+  min-height:115px;
+  resize:vertical;
+}
+
+/* ---------- ITEMS ---------- */
+
+.item{
+  position:relative;
+  padding:17px;
+  margin:12px 0;
+
+  background:rgba(255,255,255,.43);
+  border:1px solid rgba(255,255,255,.7);
+  border-radius:21px;
+
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.75),
+    0 7px 25px rgba(30,35,50,.06);
+
+  animation:itemIn .55s cubic-bezier(.22,1,.36,1);
+  transition:
+    transform .4s cubic-bezier(.22,1,.36,1),
+    box-shadow .4s ease;
+}
+
+.item:hover{
+  transform:translateY(-2px);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.85),
+    0 12px 30px rgba(30,35,50,.09);
+}
+
+@keyframes itemIn{
+  from{
+    opacity:0;
+    transform:translateY(12px) scale(.96);
+  }
+  to{
+    opacity:1;
+    transform:none;
+  }
+}
+
+/* ---------- BUTTONS ---------- */
+
+button{
+  -webkit-tap-highlight-color:transparent;
+}
+
+.add{
+  border:0;
+  margin-top:10px;
+  padding:12px 17px;
+
+  border-radius:16px;
+
+  background:rgba(0,122,255,.92);
+  color:white;
+
+  font:inherit;
+  font-size:13px;
+  font-weight:800;
+
+  cursor:pointer;
+
+  box-shadow:
+    0 8px 22px rgba(0,122,255,.23),
+    inset 0 1px 0 rgba(255,255,255,.35);
+
+  transition:
+    transform .45s cubic-bezier(.22,1,.36,1),
+    box-shadow .3s ease,
+    filter .3s ease;
+}
+
+.add:hover{
+  transform:translateY(-2px) scale(1.02);
+  box-shadow:0 13px 30px rgba(0,122,255,.28);
+}
+
+.add:active{
+  transform:scale(.91);
+  filter:brightness(.92);
+}
+
+.delete{
+  border:0;
+  margin-top:10px;
+  padding:9px 13px;
+
+  border-radius:13px;
+
+  background:rgba(255,59,48,.11);
+  color:#d52d26;
+
+  font:inherit;
+  font-size:12px;
+  font-weight:800;
+
+  cursor:pointer;
+
+  transition:
+    transform .35s cubic-bezier(.22,1,.36,1),
+    background .25s ease;
+}
+
+.delete:hover{
+  background:rgba(255,59,48,.17);
+}
+
+.delete:active{
+  transform:scale(.88);
+}
+
+.small{
+  color:var(--muted);
+  font-size:13px;
+}
+
+/* ---------- SAVE PILL ---------- */
+
+.save{
+  position:fixed;
+  z-index:150;
+  left:50%;
+  bottom:max(20px,env(safe-area-inset-bottom));
+
+  transform:translateX(-50%);
+
+  min-width:215px;
+  padding:15px 23px;
+
+  border:1px solid rgba(255,255,255,.65);
+  border-radius:999px;
+
+  color:#fff;
+  background:rgba(20,20,24,.76);
+
+  backdrop-filter:blur(24px) saturate(160%);
+  -webkit-backdrop-filter:blur(24px) saturate(160%);
+
+  font:inherit;
+  font-size:13px;
+  font-weight:850;
+
+  cursor:pointer;
+
+  box-shadow:
+    0 18px 45px rgba(0,0,0,.25),
+    inset 0 1px 0 rgba(255,255,255,.22);
+
+  transition:
+    transform .5s cubic-bezier(.22,1,.36,1),
+    opacity .3s ease,
+    box-shadow .35s ease;
+}
+
+.save:hover{
+  transform:translateX(-50%) translateY(-3px) scale(1.025);
+  box-shadow:
+    0 23px 55px rgba(0,0,0,.29),
+    inset 0 1px 0 rgba(255,255,255,.3);
+}
+
+.save:active{
+  transform:translateX(-50%) scale(.91);
+}
+
+.save:disabled{
+  opacity:.72;
+  cursor:wait;
+}
+
+.save.saving{
+  animation:savePulse 1.2s ease-in-out infinite;
+}
+
+@keyframes savePulse{
+  0%,100%{box-shadow:0 18px 45px rgba(0,0,0,.25)}
+  50%{box-shadow:0 18px 55px rgba(0,122,255,.32)}
+}
+
+/* ---------- TOAST ---------- */
+
+.toast{
+  position:fixed;
+  z-index:200;
+  left:50%;
+  bottom:88px;
+
+  padding:12px 18px;
+
+  color:#fff;
+  background:rgba(25,25,28,.78);
+
+  border:1px solid rgba(255,255,255,.2);
+  border-radius:17px;
+
+  backdrop-filter:blur(22px);
+  -webkit-backdrop-filter:blur(22px);
+
+  font-size:13px;
+  font-weight:750;
+
+  opacity:0;
+  pointer-events:none;
+
+  transform:translate(-50%,25px) scale(.9);
+
+  box-shadow:0 15px 40px rgba(0,0,0,.25);
+
+  transition:
+    opacity .45s ease,
+    transform .55s cubic-bezier(.22,1,.36,1);
+}
+
+.toast.show{
+  opacity:1;
+  transform:translate(-50%,0) scale(1);
+}
+
+/* ---------- PHOTO ---------- */
+
+.preview{
+  display:none;
+  width:120px;
+  height:120px;
+  margin-top:13px;
+  border-radius:24px;
+  object-fit:cover;
+
+  border:1px solid rgba(255,255,255,.8);
+
+  box-shadow:
+    0 12px 30px rgba(0,0,0,.14),
+    inset 0 1px 0 rgba(255,255,255,.9);
+
+  animation:itemIn .5s cubic-bezier(.22,1,.36,1);
+}
+
+/* ---------- RESPONSIVE ---------- */
+
+@media(max-width:700px){
+
+  header{
+    top:8px;
+    padding:0 9px;
+  }
+
+  .top{
+    height:58px;
+    border-radius:22px;
+  }
+
+  .logo{
+    font-size:14px;
+  }
+
+  .logoIcon{
+    width:32px;
+    height:32px;
+  }
+
+  .status{
+    padding:8px 11px;
+    font-size:11px;
+  }
+
+  main{
+    width:calc(100% - 18px);
+    padding-top:25px;
+  }
+
+  .hero{
+    padding:17px 5px 22px;
+  }
+
+  .hero h1{
+    font-size:42px;
+    letter-spacing:-2.8px;
+  }
+
+  .hero p{
+    font-size:13px;
+  }
+
+  .tabs{
+    border-radius:21px;
+    padding:6px;
+  }
+
+  .tabs button{
+    padding:10px 13px;
+    border-radius:15px;
+    font-size:12px;
+  }
+
+  .card{
+    padding:19px;
+    border-radius:24px;
+  }
+
+  .grid{
+    grid-template-columns:1fr;
+    gap:0;
+  }
+
+  .save{
+    min-width:205px;
+    bottom:max(17px,env(safe-area-inset-bottom));
+  }
+}
+
+/* ---------- REDUCED MOTION ---------- */
+
+@media(prefers-reduced-motion:reduce){
+  *,
+  *:before,
+  *:after{
+    animation:none!important;
+    transition:none!important;
+  }
+}
 </style>
 </head>
+
 <body>
-<div class="panel">
 
-<h1>⚙️ Website Admin</h1>
+<header>
+  <div class="top">
 
-<div class="card">
-<h2>🏠 Home</h2>
+    <div class="logo">
+      <div class="logoIcon">✦</div>
+      FARHAN ADMIN
+    </div>
 
-<label>Name</label>
-<input id="name">
+    <div id="status" class="status">
+      ● Loading
+    </div>
 
-<label>Tagline</label>
-<input id="tagline">
+  </div>
+</header>
 
-<label>Hero Description</label>
-<textarea id="hero"></textarea>
+<main>
 
-<label>Profile Photo</label>
-<input id="photo" type="file" accept="image/*">
+  <div class="hero">
+    <div class="heroEyebrow">PORTFOLIO CONTROL</div>
+    <h1>Control Center</h1>
+    <p>Edit your portfolio with a smooth Liquid Glass interface.</p>
+  </div>
 
-<button onclick="saveHome()">💾 Save Home</button>
-</div>
+  <div class="navShell">
 
-<div class="card">
-<h2>👤 About</h2>
+    <div class="tabs">
 
-<label>About Text</label>
-<textarea id="about"></textarea>
+      <button class="active" onclick="tab('home',this)">⌂ Home</button>
+      <button onclick="tab('about',this)">♙ About</button>
+      <button onclick="tab('education',this)">⌘ Education</button>
+      <button onclick="tab('skills',this)">✦ Skills</button>
+      <button onclick="tab('projects',this)">◈ Projects</button>
+      <button onclick="tab('achievements',this)">✪ Achievements</button>
+      <button onclick="tab('certificates',this)">▣ Certificates</button>
+      <button onclick="tab('gallery',this)">▧ Gallery</button>
+      <button onclick="tab('social',this)">◎ Social</button>
+      <button onclick="tab('contact',this)">◉ Contact</button>
+      <button onclick="tab('services',this)">◆ Services</button>
+      <button onclick="tab('settings',this)">⚙ Settings</button>
 
-<button onclick="saveAbout()">💾 Save About</button>
-</div>
-<div class="card">
-<h2>🔗 Social Links</h2>
+    </div>
 
-<label>Instagram</label>
-<input id="instagram">
+  </div>
 
-<label>YouTube</label>
-<input id="youtube">
+  <!-- HOME -->
 
-<label>GitHub</label>
-<input id="github">
+  <section id="home" class="panel active">
 
-<label>Twitter / X</label>
-<input id="twitter">
+    <div class="card">
 
-<button onclick="saveSocial()">💾 Save Social</button>
-</div>
+      <h2>⌂ Home</h2>
 
-<div class="card">
-<h2>📞 Contact</h2>
+      <label>Name</label>
+      <input id="homeName">
 
-<label>Email</label>
-<input id="email">
+      <label>Headline</label>
+      <input id="homeHeadline">
 
-<label>WhatsApp Number</label>
-<input id="phone">
+      <label>Introduction</label>
+      <textarea id="homeAbout"></textarea>
 
-<label>Contact Message</label>
-<textarea id="message"></textarea>
+      <label>Profile Photo URL</label>
+      <input id="homePhoto">
 
-<button onclick="saveContact()">💾 Save Contact</button>
-</div>
+      <img id="photoPreview" class="preview">
 
-<div class="card">
-<h2>👁️ Sections</h2>
+    </div>
 
-<label><input type="checkbox" id="showAbout"> Show About</label>
-<label><input type="checkbox" id="showSkills"> Show Skills</label>
-<label><input type="checkbox" id="showProjects"> Show Projects</label>
-<label><input type="checkbox" id="showGallery"> Show Gallery</label>
-<label><input type="checkbox" id="showContact"> Show Contact</label>
+  </section>
 
-<button onclick="saveSettings()">💾 Save Visibility</button>
-</div>
+  <!-- ABOUT -->
+
+  <section id="about" class="panel">
+
+    <div class="card">
+
+      <h2>♙ About Me</h2>
+
+      <label>Title</label>
+      <input id="aboutTitle">
+
+      <label>Description</label>
+      <textarea id="aboutDescription"></textarea>
+
+    </div>
+
+  </section>
+
+  <!-- EDUCATION -->
+
+  <section id="education" class="panel">
+
+    <div class="card">
+
+      <h2>⌘ Education</h2>
+
+      <div id="educationList"></div>
+
+      <button class="add" onclick="addEducation()">
+        ＋ Add Education
+      </button>
+
+    </div>
+
+  </section>
+
+  <!-- SKILLS -->
+
+  <section id="skills" class="panel">
+
+    <div class="card">
+
+      <h2>✦ Skills</h2>
+
+      <p class="small">
+        Add as many skills as you want.
+      </p>
+
+      <div id="skillsList"></div>
+
+      <button class="add" onclick="addSkill()">
+        ＋ Add Skill
+      </button>
+
+    </div>
+
+  </section>
+
+  <!-- PROJECTS -->
+
+  <section id="projects" class="panel">
+
+    <div class="card">
+
+      <h2>◈ Projects</h2>
+
+      <div id="projectsList"></div>
+
+      <button class="add" onclick="addProject()">
+        ＋ Add Project
+      </button>
+
+    </div>
+
+  </section>
+
+  <!-- ACHIEVEMENTS -->
+
+  <section id="achievements" class="panel">
+
+    <div class="card">
+
+      <h2>✪ Achievements</h2>
+
+      <div id="achievementsList"></div>
+
+      <button class="add" onclick="addAchievement()">
+        ＋ Add Achievement
+      </button>
+
+    </div>
+
+  </section>
+
+  <!-- CERTIFICATES -->
+
+  <section id="certificates" class="panel">
+
+    <div class="card">
+
+      <h2>▣ Certificates</h2>
+
+      <div id="certificatesList"></div>
+
+      <button class="add" onclick="addCertificate()">
+        ＋ Add Certificate
+      </button>
+
+    </div>
+
+  </section>
+
+  <!-- GALLERY -->
+
+  <section id="gallery" class="panel">
+
+    <div class="card">
+
+      <h2>▧ Gallery</h2>
+
+      <div id="galleryList"></div>
+
+      <button class="add" onclick="addGallery()">
+        ＋ Add Image
+      </button>
+
+    </div>
+
+  </section>
+
+  <!-- SOCIAL -->
+
+  <section id="social" class="panel">
+
+    <div class="card">
+
+      <h2>◎ Social Links</h2>
+
+      <div class="grid">
+
+        <div>
+          <label>Instagram</label>
+          <input id="instagram">
+        </div>
+
+        <div>
+          <label>YouTube</label>
+          <input id="youtube">
+        </div>
+
+        <div>
+          <label>GitHub</label>
+          <input id="github">
+        </div>
+
+        <div>
+          <label>LinkedIn</label>
+          <input id="linkedin">
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+  <!-- CONTACT -->
+
+  <section id="contact" class="panel">
+
+    <div class="card">
+
+      <h2>◉ Contact</h2>
+
+      <div class="grid">
+
+        <div>
+          <label>Email</label>
+          <input id="email">
+        </div>
+
+        <div>
+          <label>Phone</label>
+          <input id="phone">
+        </div>
+
+      </div>
+
+      <label>Contact Message</label>
+      <textarea id="contactMessage"></textarea>
+
+    </div>
+
+  </section>
+
+  <!-- SERVICES -->
+
+  <section id="services" class="panel">
+
+    <div class="card">
+
+      <h2>◆ Services</h2>
+
+      <div id="servicesList"></div>
+
+      <button class="add" onclick="addService()">
+        ＋ Add Service
+      </button>
+
+    </div>
+
+  </section>
+
+  <!-- SETTINGS -->
+
+  <section id="settings" class="panel">
+
+    <div class="card">
+
+      <h2>⚙ Website Settings</h2>
+
+      <label>Website Title</label>
+      <input id="siteTitle">
+
+      <label>Theme</label>
+
+      <select id="theme">
+        <option value="dark">Dark</option>
+        <option value="light">Light</option>
+      </select>
+
+    </div>
+
+  </section>
+
+</main>
+
+<button id="saveBtn" class="save" onclick="saveAll()">
+  ✦ SAVE ALL CHANGES
+</button>
+
+<div id="toast" class="toast"></div>
+
 <script>
-let data={};
+
+let d={};
+let dirty=false;
+let toastTimer;
+
+const $=id=>document.getElementById(id);
+
+/* ---------- STATUS ---------- */
+
+function setStatus(type,text){
+
+  const s=$('status');
+
+  s.className='status '+type;
+  s.textContent=text;
+
+}
+
+/* ---------- TOAST ---------- */
+
+function toast(text){
+
+  const t=$('toast');
+
+  t.textContent=text;
+  t.classList.add('show');
+
+  clearTimeout(toastTimer);
+
+  toastTimer=setTimeout(()=>{
+    t.classList.remove('show');
+  },1900);
+
+}
+
+/* ---------- DIRTY ---------- */
+
+function markDirty(){
+
+  if(!dirty){
+
+    dirty=true;
+
+    setStatus(
+      'unsaved',
+      '● Unsaved Changes'
+    );
+
+  }
+
+}
+
+/* ---------- INPUT WATCHER ---------- */
+
+document.addEventListener('input',e=>{
+
+  if(
+    e.target.matches(
+      'input,textarea,select'
+    )
+  ){
+
+    markDirty();
+
+  }
+
+});
+
+/* ---------- TAB ---------- */
+
+function tab(id,btn){
+
+  document.querySelectorAll('.panel')
+    .forEach(x=>x.classList.remove('active'));
+
+  document.querySelectorAll('.tabs button')
+    .forEach(x=>x.classList.remove('active'));
+
+  $(id).classList.add('active');
+
+  btn.classList.add('active');
+
+  btn.scrollIntoView({
+    behavior:'smooth',
+    block:'nearest',
+    inline:'center'
+  });
+
+}
+
+/* ---------- LOAD ---------- */
+const API_BASE = "https://my-portfolio-1-a7m7.onrender.com";
 
 async function load(){
-  const r=await fetch("/api/data");
-  const d=await r.json();
-  data=d;
 
-  name.value=d.name||"";
-  about.value=d.about||"";
-  instagram.value=d.instagram||"";
-  youtube.value=d.youtube||"";
+  try{
+
+    setStatus('','● Loading');
+
+    const r=await fetch(API_BASE + '/api/full-data');
+
+    if(!r.ok){
+      throw new Error(
+        'Load failed: '+r.status
+      );
+    }
+
+    d=await r.json();
+
+    homeName.value=d.home?.name||'';
+    homeHeadline.value=d.home?.headline||'';
+    homeAbout.value=d.home?.about||'';
+    homePhoto.value=d.home?.photo||'';
+
+    aboutTitle.value=d.about?.title||'';
+    aboutDescription.value=d.about?.description||'';
+
+    instagram.value=d.social?.instagram||'';
+    youtube.value=d.social?.youtube||'';
+    github.value=d.social?.github||'';
+    linkedin.value=d.social?.linkedin||'';
+
+    email.value=d.contact?.email||'';
+    phone.value=d.contact?.phone||'';
+    contactMessage.value=d.contact?.message||'';
+
+    siteTitle.value=
+      d.settings?.siteTitle||
+      'FARHAN SHAIKH';
+
+    theme.value=
+      d.settings?.theme||
+      'dark';
+
+    renderAll();
+
+    dirty=false;
+
+    setStatus(
+      'saved',
+      '● Loaded ✓'
+    );
+
+    setTimeout(()=>{
+      setStatus('','● Ready');
+    },1400);
+
+  }catch(e){
+
+    console.error(e);
+
+    setStatus(
+      'error',
+      '● Load Failed'
+    );
+
+    toast(
+      'Could not load portfolio data'
+    );
+
+  }
+
 }
 
-async function save(payload){
-  const r=await fetch("/api/data",{
-    method:"POST",
-    headers:{"Content-Type":"application/json"},
-    body:JSON.stringify(payload)
+/* ---------- RENDER ---------- */
+
+function renderAll(){
+
+  renderSkills();
+  renderProjects();
+  renderEducation();
+  renderAchievements();
+  renderCertificates();
+  renderGallery();
+  renderServices();
+  updatePhoto();
+
+}
+
+/* ---------- PHOTO ---------- */
+
+function updatePhoto(){
+
+  const url=homePhoto.value.trim();
+  const img=$('photoPreview');
+
+  if(url){
+
+    img.src=url;
+    img.style.display='block';
+
+  }else{
+
+    img.style.display='none';
+
+  }
+
+}
+
+homePhoto.addEventListener(
+  'input',
+  updatePhoto
+);
+
+/* ---------- ESCAPE ---------- */
+
+function esc(value){
+
+  return String(value??'')
+    .replace(/&/g,'&amp;')
+    .replace(/</g,'&lt;')
+    .replace(/>/g,'&gt;')
+    .replace(/"/g,'&quot;')
+    .replace(/'/g,'&#039;');
+
+}
+
+/* ---------- SKILLS ---------- */
+
+function renderSkills(){
+
+  d.skills=
+    Array.isArray(d.skills)
+      ?d.skills
+      :[];
+
+  skillsList.innerHTML=
+    d.skills.map((x,i)=>`
+
+      <div class="item">
+
+        <input
+          value="${esc(x)}"
+          onchange="
+            d.skills[${i}]=this.value;
+            markDirty()
+          "
+        >
+
+        <button
+          class="delete"
+          onclick="
+            d.skills.splice(${i},1);
+            renderSkills();
+            markDirty();
+            toast('Skill deleted')
+          "
+        >
+          Delete
+        </button>
+
+      </div>
+
+    `).join('');
+
+}
+
+function addSkill(){
+
+  d.skills=d.skills||[];
+
+  d.skills.push('New Skill');
+
+  renderSkills();
+
+  markDirty();
+
+  toast('Skill added');
+
+}
+
+/* ---------- PROJECTS ---------- */
+
+function renderProjects(){
+
+  d.projects=
+    Array.isArray(d.projects)
+      ?d.projects
+      :[];
+
+  projectsList.innerHTML=
+    d.projects.map((x,i)=>`
+
+      <div class="item">
+
+        <label>Project Name</label>
+
+        <input
+          value="${esc(x.name||'')}"
+          onchange="
+            d.projects[${i}].name=this.value;
+            markDirty()
+          "
+        >
+
+        <label>Description</label>
+
+        <textarea
+          onchange="
+            d.projects[${i}].description=this.value;
+            markDirty()
+          "
+        >${esc(x.description||'')}</textarea>
+
+        <label>Project Link</label>
+
+        <input
+          value="${esc(x.link||'')}"
+          onchange="
+            d.projects[${i}].link=this.value;
+            markDirty()
+          "
+        >
+
+        <button
+          class="delete"
+          onclick="
+            d.projects.splice(${i},1);
+            renderProjects();
+            markDirty();
+            toast('Project deleted')
+          "
+        >
+          Delete
+        </button>
+
+      </div>
+
+    `).join('');
+
+}
+
+function addProject(){
+
+  d.projects=d.projects||[];
+
+  d.projects.push({
+    name:'',
+    description:'',
+    link:''
   });
 
-  if(r.ok) alert("✅ Saved!");
-  else alert("❌ Save failed");
+  renderProjects();
+
+  markDirty();
+
+  toast('Project added');
+
 }
 
-function saveHome(){
-  save({
-    name:name.value,
-    about:about.value,
+/* ---------- EDUCATION ---------- */
+
+function renderEducation(){
+
+  d.education=
+    Array.isArray(d.education)
+      ?d.education
+      :[];
+
+  educationList.innerHTML=
+    d.education.map((x,i)=>`
+
+      <div class="item">
+
+        <label>Course / Degree</label>
+
+        <input
+          placeholder="Course / Degree"
+          value="${esc(x.course||'')}"
+          onchange="
+            d.education[${i}].course=this.value;
+            markDirty()
+          "
+        >
+
+        <label>College / University</label>
+
+        <input
+          placeholder="College / University"
+          value="${esc(x.college||'')}"
+          onchange="
+            d.education[${i}].college=this.value;
+            markDirty()
+          "
+        >
+
+        <label>Year</label>
+
+        <input
+          placeholder="Year"
+          value="${esc(x.year||'')}"
+          onchange="
+            d.education[${i}].year=this.value;
+            markDirty()
+          "
+        >
+
+        <button
+          class="delete"
+          onclick="
+            d.education.splice(${i},1);
+            renderEducation();
+            markDirty();
+            toast('Education deleted')
+          "
+        >
+          Delete
+        </button>
+
+      </div>
+
+    `).join('');
+
+}
+
+function addEducation(){
+
+  d.education=d.education||[];
+
+  d.education.push({
+    course:'',
+    college:'',
+    year:''
+  });
+
+  renderEducation();
+
+  markDirty();
+
+  toast('Education added');
+
+}
+
+/* ---------- ACHIEVEMENTS ---------- */
+
+function renderAchievements(){
+
+  d.achievements=
+    Array.isArray(d.achievements)
+      ?d.achievements
+      :[];
+
+  achievementsList.innerHTML=
+    d.achievements.map((x,i)=>`
+
+      <div class="item">
+
+        <label>Achievement</label>
+
+        <input
+          placeholder="Achievement"
+          value="${esc(x.title||'')}"
+          onchange="
+            d.achievements[${i}].title=this.value;
+            markDirty()
+          "
+        >
+
+        <label>Description</label>
+
+        <textarea
+          placeholder="Description"
+          onchange="
+            d.achievements[${i}].description=this.value;
+            markDirty()
+          "
+        >${esc(x.description||'')}</textarea>
+
+        <button
+          class="delete"
+          onclick="
+            d.achievements.splice(${i},1);
+            renderAchievements();
+            markDirty();
+            toast('Achievement deleted')
+          "
+        >
+          Delete
+        </button>
+
+      </div>
+
+    `).join('');
+
+}
+
+function addAchievement(){
+
+  d.achievements=d.achievements||[];
+
+  d.achievements.push({
+    title:'',
+    description:''
+  });
+
+  renderAchievements();
+
+  markDirty();
+
+  toast('Achievement added');
+
+}
+
+/* ---------- CERTIFICATES ---------- */
+
+function renderCertificates(){
+
+  d.certificates=
+    Array.isArray(d.certificates)
+      ?d.certificates
+      :[];
+
+  certificatesList.innerHTML=
+    d.certificates.map((x,i)=>`
+
+      <div class="item">
+
+        <label>Certificate Name</label>
+
+        <input
+          placeholder="Certificate Name"
+          value="${esc(x.name||'')}"
+          onchange="
+            d.certificates[${i}].name=this.value;
+            markDirty()
+          "
+        >
+
+        <label>Issuer</label>
+
+        <input
+          placeholder="Issuer"
+          value="${esc(x.issuer||'')}"
+          onchange="
+            d.certificates[${i}].issuer=this.value;
+            markDirty()
+          "
+        >
+
+        <label>Year</label>
+
+        <input
+          placeholder="Year"
+          value="${esc(x.year||'')}"
+          onchange="
+            d.certificates[${i}].year=this.value;
+            markDirty()
+          "
+        >
+
+        <button
+          class="delete"
+          onclick="
+            d.certificates.splice(${i},1);
+            renderCertificates();
+            markDirty();
+            toast('Certificate deleted')
+          "
+        >
+          Delete
+        </button>
+
+      </div>
+
+    `).join('');
+
+}
+
+function addCertificate(){
+
+  d.certificates=d.certificates||[];
+
+  d.certificates.push({
+    name:'',
+    issuer:'',
+    year:''
+  });
+
+  renderCertificates();
+
+  markDirty();
+
+  toast('Certificate added');
+
+}
+
+/* ---------- GALLERY ---------- */
+
+function renderGallery(){
+
+  d.gallery =
+    Array.isArray(d.gallery)
+      ? d.gallery
+      : [];
+
+  galleryList.innerHTML =
+    d.gallery.map((x,i)=>{
+
+      const url =
+        typeof x === "string"
+          ? x
+          : (x?.url || "");
+
+      const type =
+        typeof x === "object"
+          ? (x?.type || "")
+          : "";
+
+      const isVideo =
+        type === "video" ||
+        /\.(mp4|webm|ogg|mov|m4v)(\?|$)/i.test(url);
+
+      return `
+        <div class="item">
+
+          <label>${isVideo ? "Video" : "Image"}</label>
+
+          ${
+            url
+              ? (
+                  isVideo
+                    ? `
+                      <video
+                        src="${esc(url)}"
+                        controls
+                        playsinline
+                        style="width:100%;max-height:260px;border-radius:18px;margin:10px 0;object-fit:cover;"
+                      ></video>
+                    `
+                    : `
+                      <img
+                        src="${esc(url)}"
+                        alt="Gallery"
+                        style="width:100%;max-height:260px;border-radius:18px;margin:10px 0;object-fit:cover;"
+                      >
+                    `
+                )
+              : `
+                <p class="small">No media selected</p>
+              `
+          }
+
+          <input
+            id="galleryFile${i}"
+            type="file"
+            accept="image/*,video/*"
+            style="display:none"
+            onchange="uploadGalleryMedia(${i},this)"
+          >
+
+          <button
+            class="add"
+            type="button"
+            onclick="document.getElementById('galleryFile${i}').click()"
+          >
+            ${url ? "Change Media" : "Choose Image / Video"}
+          </button>
+
+          <button
+            class="delete"
+            type="button"
+            onclick="
+              d.gallery.splice(${i},1);
+              renderGallery();
+              markDirty();
+              toast('Media deleted')
+            "
+          >
+            Delete
+          </button>
+
+        </div>
+      `;
+
+    }).join('');
+
+}
+
+async function uploadGalleryMedia(index, input){
+
+  const file = input.files && input.files[0];
+
+  if(!file) return;
+
+  const formData = new FormData();
+  formData.append("media", file);
+
+  try{
+
+    toast("Uploading...");
+
+    const response = await fetch(API_BASE + "/api/gallery-upload",{
+      method:"POST",
+      body:formData
+    });
+
+    const result = await response.json();
+
+    if(!response.ok || !result.success){
+      throw new Error(result.error || "Upload failed");
+    }
+
+    d.gallery[index] = {
+      url: result.url,
+      type: result.type
+    };
+
+    renderGallery();
+    markDirty();
+
+    toast("Media uploaded");
+
+  }catch(error){
+
+    console.error(error);
+    toast("Upload failed");
+
+    input.value = "";
+
+  }
+
+}
+
+function addGallery(){
+
+  d.gallery = d.gallery || [];
+
+  d.gallery.push({
+    url:"",
+    type:"image"
+  });
+
+  renderGallery();
+  markDirty();
+
+  toast("Media added");
+
+}
+
+/* ---------- SERVICES ---------- */
+
+function renderServices(){
+
+  d.services=
+    Array.isArray(d.services)
+      ?d.services
+      :[];
+
+  servicesList.innerHTML=
+    d.services.map((x,i)=>`
+
+      <div class="item">
+
+        <label>Service</label>
+
+        <input
+          placeholder="Service"
+          value="${esc(x.title||'')}"
+          onchange="
+            d.services[${i}].title=this.value;
+            markDirty()
+          "
+        >
+
+        <label>Description</label>
+
+        <textarea
+          placeholder="Description"
+          onchange="
+            d.services[${i}].description=this.value;
+            markDirty()
+          "
+        >${esc(x.description||'')}</textarea>
+
+        <button
+          class="delete"
+          onclick="
+            d.services.splice(${i},1);
+            renderServices();
+            markDirty();
+            toast('Service deleted')
+          "
+        >
+          Delete
+        </button>
+
+      </div>
+
+    `).join('');
+
+}
+
+function addService(){
+
+  d.services=d.services||[];
+
+  d.services.push({
+    title:'',
+    description:''
+  });
+
+  renderServices();
+
+  markDirty();
+
+  toast('Service added');
+
+}
+
+/* ---------- SAVE ---------- */
+
+async function saveAll(){
+
+  if(!dirty){
+
+    toast('Nothing to save');
+
+    return;
+
+  }
+
+  const btn=$('saveBtn');
+
+  btn.disabled=true;
+  btn.classList.add('saving');
+
+  btn.textContent='◌ SAVING…';
+
+  setStatus(
+    'saving',
+    '● Saving…'
+  );
+
+  d.home={
+    ...(d.home||{}),
+    name:homeName.value,
+    headline:homeHeadline.value,
+    about:homeAbout.value,
+    photo:homePhoto.value
+  };
+
+  d.about={
+    ...(d.about||{}),
+    title:aboutTitle.value,
+    description:aboutDescription.value
+  };
+
+  d.social={
+    ...(d.social||{}),
     instagram:instagram.value,
-    youtube:youtube.value
-  });
+    youtube:youtube.value,
+    github:github.value,
+    linkedin:linkedin.value
+  };
+
+  d.contact={
+    ...(d.contact||{}),
+    email:email.value,
+    phone:phone.value,
+    message:contactMessage.value
+  };
+
+  d.settings={
+    ...(d.settings||{}),
+    siteTitle:siteTitle.value,
+    theme:theme.value
+  };
+
+  try{
+
+    const r=await fetch(
+      API_BASE + '/api/full-data',
+      {
+        method:'POST',
+        headers:{
+          'Content-Type':
+            'application/json'
+        },
+        body:JSON.stringify(d)
+      }
+    );
+
+    if(!r.ok){
+
+      throw new Error(
+        'Server returned '+r.status
+      );
+
+    }
+
+    const result=await r.json();
+
+    if(!result.success){
+
+      throw new Error(
+        'Server did not confirm save'
+      );
+
+    }
+
+    d=result.data||d;
+
+    dirty=false;
+
+    setStatus(
+      'saved',
+      '● Saved ✓'
+    );
+
+    btn.classList.remove('saving');
+
+    btn.textContent='✓ SAVED';
+
+    toast(
+      'Changes saved successfully'
+    );
+
+    setTimeout(()=>{
+
+      btn.textContent=
+        '✦ SAVE ALL CHANGES';
+
+      btn.disabled=false;
+
+      setStatus(
+        '',
+        '● Ready'
+      );
+
+    },1900);
+
+  }catch(e){
+
+    console.error(e);
+
+    btn.classList.remove('saving');
+
+    btn.textContent=
+      '⚠ SAVE FAILED';
+
+    btn.disabled=false;
+
+    setStatus(
+      'error',
+      '● Save Failed'
+    );
+
+    toast(
+      'Save failed — try again'
+    );
+
+  }
+
 }
 
-function saveAbout(){
-  save({
-    name:name.value,
-    about:about.value,
-    instagram:instagram.value,
-    youtube:youtube.value
-  });
-}
-
-function saveSocial(){
-  save({
-    name:name.value,
-    about:about.value,
-    instagram:instagram.value,
-    youtube:youtube.value
-  });
-}
-
-function saveContact(){
-  alert("Contact editor will be connected in the next step.");
-}
-
-function saveSettings(){
-  alert("Section controls will be connected in the next step.");
-}
+/* ---------- START ---------- */
 
 load();
+
 </script>
 
-</div>
 </body>
 </html>

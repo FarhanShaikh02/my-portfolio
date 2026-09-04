@@ -4,7 +4,7 @@ const fs = require("fs");
 const path = require("path");
 
 const app = express();
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 
 const DATA_FILE = path.join(__dirname, "data.json");
 const UPLOAD_DIR = path.join(__dirname, "uploads");
@@ -15,6 +15,13 @@ if (!fs.existsSync(UPLOAD_DIR)) {
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use((req, res, next) => {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Methods", "GET,POST,OPTIONS");
+    res.header("Access-Control-Allow-Headers", "Content-Type");
+    if (req.method === "OPTIONS") return res.sendStatus(204);
+    next();
+});
 
 app.use(express.static(path.join(__dirname, "public")));
 app.use("/uploads", express.static(UPLOAD_DIR));
@@ -98,6 +105,61 @@ app.post("/api/photo", upload.single("photo"), (req, res) => {
         });
     } catch (error) {
         res.status(500).json({ error: "Photo upload failed" });
+    }
+});
+
+
+// Gallery media upload
+const galleryStorage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, UPLOAD_DIR);
+    },
+    filename: (req, file, cb) => {
+        const ext = path.extname(file.originalname).toLowerCase();
+        const base = path.basename(file.originalname, ext)
+            .replace(/[^a-zA-Z0-9_-]/g, "-")
+            .slice(0, 40);
+
+        cb(null, "gallery-" + Date.now() + "-" + base + ext);
+    }
+});
+
+const galleryUpload = multer({
+    storage: galleryStorage,
+    limits: {
+        fileSize: 100 * 1024 * 1024
+    },
+    fileFilter: (req, file, cb) => {
+        if (
+            file.mimetype.startsWith("image/") ||
+            file.mimetype.startsWith("video/")
+        ) {
+            cb(null, true);
+        } else {
+            cb(new Error("Only image and video files are allowed"));
+        }
+    }
+});
+
+app.post("/api/gallery-upload", galleryUpload.single("media"), (req, res) => {
+    try {
+        if (!req.file) {
+            return res.status(400).json({ error: "No image or video selected" });
+        }
+
+        const mediaUrl = "/uploads/" + req.file.filename;
+
+        res.json({
+            success: true,
+            url: mediaUrl,
+            type: req.file.mimetype.startsWith("video/")
+                ? "video"
+                : "image"
+        });
+    } catch (error) {
+        res.status(500).json({
+            error: "Gallery upload failed"
+        });
     }
 });
 
