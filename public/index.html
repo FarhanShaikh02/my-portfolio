@@ -637,10 +637,14 @@ async function loadWebsite() {
       text(home.about) ||
       "Creative developer and technology enthusiast.";
 
-    if (home.photo) {
-      $("profile").src = home.photo;
-    }
+const profile = $("profile");
 
+profile.onerror = () => {
+  profile.onerror = null;
+  profile.src = "uploads/profile.jpg";
+};
+
+profile.src = "uploads/profile.jpg";
     /* SOCIAL */
     setLink("instagram", social.instagram);
     setLink("youtube", social.youtube);
