@@ -638,7 +638,7 @@ async function loadWebsite() {
       "Creative developer and technology enthusiast.";
 
     if (home.photo) {
-      $("profile").src = home.photo;
+      $("profile").src = home.photo.startsWith("/") ? "." + home.photo : home.photo;
     }
 
     /* SOCIAL */
