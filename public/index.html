@@ -2,316 +2,834 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>Farhan Shaikh</title>
 
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
 body{
-    font-family:Arial,sans-serif;
-    background:#050505;
-    color:white;
-    overflow-x:hidden;
+margin:0;
+font-family:Arial,sans-serif;
+color:#fff;
+background:#07080d;
+overflow-x:hidden;
+}
+
+body:before,
+body:after{
+content:"";
+position:fixed;
+width:420px;
+height:420px;
+border-radius:50%;
+filter:blur(110px);
+opacity:.25;
+z-index:-2;
+pointer-events:none;
 }
 body:before{
-    content:"";
-    position:fixed;
-    width:500px;height:500px;
-    background:#6c5ce7;
-    filter:blur(180px);
-    opacity:.18;
-    top:-200px;left:-180px;
-    z-index:-1;
+background:#7165ff;
+top:-180px;
+left:-160px;
 }
+body:after{
+background:#00d8c4;
+right:-180px;
+bottom:-180px;
+}
+
+.liquid{
+position:fixed;
+width:260px;
+height:260px;
+border-radius:50%;
+background:linear-gradient(135deg,#8b80ff,#00d8c4);
+filter:blur(70px);
+opacity:.12;
+left:45%;
+top:42%;
+animation:float 10s ease-in-out infinite alternate;
+z-index:-1;
+}
+@keyframes float{
+0%{transform:translate(-80px,-50px) scale(.8)}
+100%{transform:translate(100px,70px) scale(1.2)}
+}
+
 nav{
-    position:fixed;
-    top:0;left:0;width:100%;
-    padding:20px 7%;
-    display:flex;
-    justify-content:space-between;
-    backdrop-filter:blur(15px);
-    background:#05050599;
-    border-bottom:1px solid #ffffff12;
-    z-index:10;
+position:fixed;
+top:14px;
+left:50%;
+transform:translateX(-50%);
+width:min(1080px,calc(100% - 28px));
+padding:14px 18px;
+display:flex;
+align-items:center;
+justify-content:space-between;
+border:1px solid #ffffff18;
+border-radius:24px;
+background:#ffffff0b;
+backdrop-filter:blur(25px) saturate(180%);
+-webkit-backdrop-filter:blur(25px) saturate(180%);
+box-shadow:0 15px 50px #0006,inset 0 1px #ffffff18;
+z-index:100;
 }
-.logo{font-size:22px;font-weight:bold}
-.logo span{color:#8b7cff}
-nav a{
-    color:#aaa;
-    text-decoration:none;
-    margin-left:20px;
+
+.logo{
+font-size:20px;
+font-weight:800;
 }
-nav a:hover{color:white}
+.logo span{color:#887cff}
+
+.navlinks{
+display:flex;
+gap:5px;
+}
+.navlinks a{
+padding:9px 12px;
+border-radius:14px;
+color:#aaa;
+font-size:13px;
+text-decoration:none;
+transition:.3s;
+}
+.navlinks a:hover{
+color:#fff;
+background:#ffffff12;
+}
 
 .hero{
-    min-height:100vh;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    text-align:center;
-    padding:100px 20px;
+min-height:100vh;
+display:flex;
+align-items:center;
+justify-content:center;
+text-align:center;
+padding:120px 20px 80px;
 }
+.hero-inner{
+max-width:850px;
+animation:hero .9s cubic-bezier(.22,1,.36,1);
+}
+@keyframes hero{
+from{opacity:0;transform:translateY(40px) scale(.96)}
+to{opacity:1;transform:none}
+}
+
 .profile{
-    width:150px;height:150px;
-    border-radius:50%;
-    margin:auto auto 25px;
-    object-fit:cover;
-    background:linear-gradient(135deg,#8b7cff,#00cec9);
-    padding:4px;
-    display:block;
+width:155px;
+height:155px;
+padding:4px;
+border-radius:50%;
+object-fit:cover;
+background:linear-gradient(135deg,#8175ff,#00d8c4);
+box-shadow:0 0 70px #8175ff35;
+margin-bottom:25px;
 }
+
+.badge{
+display:inline-flex;
+align-items:center;
+gap:8px;
+padding:8px 14px;
+border:1px solid #ffffff16;
+border-radius:30px;
+background:#ffffff09;
+backdrop-filter:blur(20px);
+color:#bbb;
+font-size:12px;
+margin-bottom:20px;
+}
+.dot{
+width:7px;
+height:7px;
+border-radius:50%;
+background:#61ffdb;
+box-shadow:0 0 12px #61ffdb;
+}
+
 h1{
-    font-size:clamp(45px,9vw,80px);
-    margin-bottom:20px;
+font-size:clamp(48px,9vw,88px);
+line-height:.98;
+letter-spacing:-4px;
+margin-bottom:25px;
 }
 .gradient{
-    background:linear-gradient(90deg,#fff,#8b7cff,#00cec9);
-    -webkit-background-clip:text;
-    color:transparent;
+background:linear-gradient(100deg,#fff,#9b91ff,#4eeedc);
+-webkit-background-clip:text;
+background-clip:text;
+color:transparent;
 }
+
 .hero p{
-    max-width:650px;
-    margin:auto;
-    color:#999;
-    font-size:18px;
-    line-height:1.7;
+max-width:650px;
+margin:auto;
+color:#92939d;
+font-size:18px;
+line-height:1.8;
 }
+
+.buttons{
+display:flex;
+justify-content:center;
+gap:12px;
+flex-wrap:wrap;
+margin-top:30px;
+}
+
 .btn{
-    display:inline-block;
-    margin:30px 6px 0;
-    padding:14px 24px;
-    border-radius:30px;
-    text-decoration:none;
-    color:white;
-    background:#ffffff0d;
-    border:1px solid #ffffff1a;
+display:inline-block;
+padding:14px 21px;
+border-radius:18px;
+border:1px solid #ffffff18;
+background:#ffffff0a;
+color:#eee;
+text-decoration:none;
+backdrop-filter:blur(20px);
+-webkit-backdrop-filter:blur(20px);
+box-shadow:inset 0 1px #ffffff15,0 10px 35px #0004;
+transition:.35s;
 }
-.btn.primary{
-    background:linear-gradient(135deg,#7567ff,#00aaa5);
+.btn:hover{
+transform:translateY(-4px);
+box-shadow:inset 0 1px #ffffff20,0 20px 45px #0007;
 }
-section{padding:100px 7%}
-.container{max-width:1100px;margin:auto}
-.title{font-size:42px;margin-bottom:12px}
-.sub{color:#777;margin-bottom:35px}
+.primary{
+background:linear-gradient(135deg,#8175ffcc,#00cfc0bb);
+}
+
+section{
+padding:100px 20px;
+}
+.container{
+width:min(1100px,100%);
+margin:auto;
+}
+.label{
+color:#8175ff;
+font-size:11px;
+letter-spacing:2px;
+text-transform:uppercase;
+font-weight:bold;
+margin-bottom:10px;
+}
+.title{
+font-size:clamp(34px,5vw,50px);
+letter-spacing:-2px;
+}
+.sub{
+color:#777985;
+margin:10px 0 32px;
+}
+
+.glass{
+padding:30px;
+border-radius:30px;
+border:1px solid #ffffff14;
+background:#ffffff08;
+backdrop-filter:blur(28px) saturate(160%);
+-webkit-backdrop-filter:blur(28px) saturate(160%);
+box-shadow:0 25px 70px #0005,inset 0 1px #ffffff15;
+}
+
+.grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+gap:18px;
+}
+
 .card{
-    padding:30px;
-    border-radius:25px;
-    background:#ffffff08;
-    border:1px solid #ffffff10;
-    backdrop-filter:blur(15px);
-    color:#aaa;
-    line-height:1.8;
+padding:25px;
+min-height:145px;
+border-radius:25px;
+border:1px solid #ffffff11;
+background:#ffffff07;
+backdrop-filter:blur(22px) saturate(150%);
+-webkit-backdrop-filter:blur(22px) saturate(150%);
+box-shadow:inset 0 1px #ffffff10,0 15px 45px #0004;
+transition:.4s;
 }
-.skills,.socials{
-    display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
-    gap:18px;
+.card:hover{
+transform:translateY(-8px);
+border-color:#8175ff55;
+box-shadow:inset 0 1px #ffffff18,0 25px 60px #0008;
 }
-.skill,.social{
-    padding:25px;
-    border-radius:20px;
-    background:#ffffff07;
-    border:1px solid #ffffff10;
-    transition:.3s;
+.icon{
+font-size:28px;
+margin-bottom:14px;
 }
-.skill:hover,.social:hover{
-    transform:translateY(-7px);
-    border-color:#7c6cff;
+.card h3{
+margin-bottom:8px;
+font-size:18px;
 }
-.skill p,.social span{
-    color:#777;
-    font-size:14px;
-    margin-top:8px;
+.card p{
+color:#858691;
+font-size:14px;
+line-height:1.7;
 }
+
 .social{
-    text-decoration:none;
-    color:white;
+display:flex;
+align-items:center;
+justify-content:space-between;
+text-decoration:none;
+color:#fff;
 }
+.social small{
+display:block;
+color:#777;
+margin-top:4px;
+}
+
+.contact{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:18px;
+}
+.contact-box{
+padding:22px;
+border-radius:22px;
+background:#ffffff07;
+border:1px solid #ffffff10;
+}
+.contact-box small{
+display:block;
+color:#777;
+font-size:11px;
+letter-spacing:1.5px;
+text-transform:uppercase;
+margin-bottom:7px;
+}
+.contact-box span{
+color:#eee;
+word-break:break-word;
+}
+
 footer{
-    text-align:center;
-    padding:40px;
-    color:#555;
-    border-top:1px solid #ffffff0d;
+padding:45px 20px;
+text-align:center;
+color:#666;
+border-top:1px solid #ffffff0c;
+font-size:13px;
 }
-@media(max-width:600px){
-    nav div:last-child{display:none}
-    section{padding:75px 5%}
+
+@media(max-width:700px){
+.navlinks{display:none}
+h1{letter-spacing:-2.5px}
+section{padding:80px 16px}
+.contact{grid-template-columns:1fr}
+.hero p{font-size:16px}
+.buttons .btn{width:100%}
+.profile{width:130px;height:130px}
 }
 </style>
-<link rel="stylesheet" href="/animation.css"></head>
+</head>
 
 <body>
 
+<div class="liquid"></div>
+
 <nav>
-    <div class="logo">Farhan<span>.</span></div>
-    <div>
-        <a href="#home">Home</a><a href="#about">About</a><a href="#skills">Skills</a><a href="#projects">Projects</a><a href="#gallery">Gallery</a><a href="#social">Social</a><a href="#contact">Contact</a><a href="/admin">⚙️ Admin</a>
-        <a href="#skills">Skills</a>
-        <a href="#social">Social</a>
-    </div>
+<div class="logo">Farhan<span>.</span></div>
+<div class="navlinks">
+<a href="#home">Home</a>
+<a href="#about">About</a>
+<a href="#skills">Skills</a>
+<a href="#projects">Projects</a>
+<a href="#gallery">Gallery</a>
+<a href="#social">Social</a>
+<a href="#contact">Contact</a>
+<a href="/admin">⚙ Admin</a>
+</div>
 </nav>
 
 <section class="hero" id="home">
-    <div>
-        <img id="profile" class="profile" src="" alt="Farhan">
+<div class="hero-inner">
 
-        <h1>
-            Hi, I'm<br>
-            <span id="name" class="gradient">Farhan Shaikh</span>
-        </h1>
+<img id="profile" class="profile" src="" alt="Farhan">
 
-        <p id="heroText">
-            Developer, creator and technology enthusiast.
-        </p>
+<div class="badge">
+<span class="dot"></span>
+Life Science Student • Creator
+</div>
 
-        <a href="#about" class="btn primary">Explore My World ↓</a>
-        <a id="instagramTop" href="#" target="_blank" class="btn">Instagram ↗</a>
-    <a href="#skills" class="btn">My Skills ↓</a>
-<a href="#social" class="btn">Contact Me ↗</a>
+<h1>
+Hi, I'm<br>
+<span id="name" class="gradient">Farhan Shaikh</span>
+</h1>
+
+<p id="heroText">
+Developer, creator and technology enthusiast.
+</p>
+
+<div class="buttons">
+<a href="#about" class="btn primary">Explore My World ↓</a>
+<a id="instagramTop" href="#" target="_blank" class="btn">Instagram ↗</a>
+<a href="#contact" class="btn">Let's Connect ↗</a>
+</div>
+
 </div>
 </section>
 
 <section id="about">
 <div class="container">
-    <h2 class="title">About Me</h2>
-    <p class="sub">A little bit about me.</p>
+<div class="label">01 — About</div>
+<h2 class="title">A little bit about me.</h2>
+<p class="sub">Who I am and what I love creating.</p>
 
-    <div class="card" id="aboutText">
-        Loading...
-    </div>
+<div class="glass">
+<p id="aboutText" style="color:#a5a6af;line-height:1.9">
+Loading...
+</p>
+</div>
 </div>
 </section>
 
 <section id="skills">
 <div class="container">
-    <h2 class="title">What I Do</h2>
-    <p class="sub">Things I'm interested in.</p>
+<div class="label">02 — Skills</div>
+<h2 class="title">What I Do</h2>
+<p class="sub">Things I'm interested in and constantly learning.</p>
 
-    <div class="skills">
-        <div class="skill">
-            <h3>💻 Web Development</h3>
-            <p>Building modern websites and digital experiences.</p>
-        </div>
-
-        <div class="skill">
-            <h3>🎨 Creative Design</h3>
-            <p>Exploring UI, animations and visual ideas.</p>
-        </div>
-
-        <div class="skill">
-            <h3>🎬 Content Creation</h3>
-            <p>Creating digital content and experimenting with ideas.</p>
-        </div>
-
-        <div class="skill">
-            <h3>🚀 Technology</h3>
-            <p>Learning new technologies and improving every day.</p>
-        </div>
-    </div>
+<div id="skillsGrid" class="grid"></div>
 </div>
 </section>
 
-<div id="skillModal" class="modal"><div class="modalBox"><button class="close" onclick="closeSkill()">×</button><div id="modalIcon"></div><h2 id="modalTitle"></h2><p id="modalText"></p><p id="modalTech"></p></div></div>
-
-<section id="projects"><div class="container"><h2 class="title">Projects</h2><p class="sub">Things I have created.</p><div class="skills"><div class="skill"><h3>🌐 My Portfolio</h3><p>My personal portfolio website with modern design and smooth animations.</p></div><div class="skill"><h3>🎮 Game Project</h3><p>Interactive game experiments and creative coding projects.</p></div><div class="skill"><h3>🤖 AI Experiments</h3><p>Exploring artificial intelligence and new technology.</p></div></div></div></section><section id="gallery"><div class="container"><h2 class="title">Gallery</h2><p class="sub">My favourite moments and creations.</p><div class="skills"><div class="skill"><h3>📸 Photos</h3><p>My favourite photos and memories.</p></div><div class="skill"><h3>🎥 Videos</h3><p>Creative videos and content.</p></div><div class="skill"><h3>✨ Creations</h3><p>Designs, edits and experiments.</p></div></div></div></section><section id="social">
+<section id="education">
 <div class="container">
-    <h2 class="title">Find Me Online</h2>
-    <p class="sub">Let's connect.</p>
+<div class="label">03 — Education</div>
+<h2 class="title">My Education</h2>
+<p class="sub">The journey I'm currently on.</p>
 
-    <div class="socials">
-
-        <a id="instagram" class="social" href="#" target="_blank">
-            📸 Instagram
-            <span id="instagramName">@farhan_shaikh02_</span>
-        </a>
-
-        <a id="youtube" class="social" href="#" target="_blank">
-            ▶️ YouTube
-            <span>Farhan Shaikh</span>
-        </a>
-
-    </div>
+<div id="educationGrid" class="grid"></div>
 </div>
 </section>
 
-<section id="contact"><div class="container"><h2 class="title">Contact Me</h2><p class="sub">Let’s connect and create something together.</p><div class="card"><p>📧 Email: <span id="contactEmail">Add your email in Admin Panel</span></p><p style="margin-top:15px">📱 Phone / WhatsApp: <span id="contactPhone">Add your number in Admin Panel</span></p><a href="mailto:" id="emailBtn" class="btn primary">Send Email ↗</a></div></div></section><section id="contact"><div class="container"><h2 class="title">Contact Me</h2><p class="sub">Let’s connect and create something together.</p><div class="card"><p>📧 Email: <span>Add your email in Admin Panel</span></p><p style="margin-top:15px">📱 WhatsApp: <span>Add your number in Admin Panel</span></p><a href="mailto:" class="btn primary">Send Email ↗</a></div></div></section><footer>
-    © 2026 Farhan Shaikh • Built with code.
+<section id="projects">
+<div class="container">
+<div class="label">04 — Projects</div>
+<h2 class="title">Things I've Created</h2>
+<p class="sub">Experiments, websites and creative projects.</p>
+<div id="projectsGrid" class="grid"></div>
+</div>
+</section>
+
+<section id="achievements">
+<div class="container">
+<div class="label">05 — Achievements</div>
+<h2 class="title">Achievements</h2>
+<p class="sub">Milestones worth remembering.</p>
+<div id="achievementsGrid" class="grid"></div>
+</div>
+</section>
+
+<section id="certificates">
+<div class="container">
+<div class="label">06 — Certificates</div>
+<h2 class="title">Certificates</h2>
+<p class="sub">Learning and collecting experience.</p>
+<div id="certificatesGrid" class="grid"></div>
+</div>
+</section>
+
+<section id="gallery">
+<div class="container">
+<div class="label">07 — Gallery</div>
+<h2 class="title">My Gallery</h2>
+<p class="sub">Favourite moments, edits and creations.</p>
+<div id="galleryGrid" class="grid"></div>
+</div>
+</section>
+
+<section id="services">
+<div class="container">
+<div class="label">08 — Services</div>
+<h2 class="title">What I Can Do</h2>
+<p class="sub">Creative and digital work.</p>
+<div id="servicesGrid" class="grid"></div>
+</div>
+</section>
+
+<section id="social">
+<div class="container">
+<div class="label">09 — Social</div>
+<h2 class="title">Find Me Online</h2>
+<p class="sub">Let's connect.</p>
+
+<div class="grid">
+
+<a id="instagram" class="card social" href="#" target="_blank">
+<div>
+<h3>📸 Instagram</h3>
+<small id="instagramName">@farhan_shaikh02_</small>
+</div>
+<span>↗</span>
+</a>
+
+<a id="youtube" class="card social" href="#" target="_blank">
+<div>
+<h3>▶️ YouTube</h3>
+<small>Farhan Shaikh</small>
+</div>
+<span>↗</span>
+</a>
+
+<a id="github" class="card social" href="#" target="_blank">
+<div>
+<h3>◉ GitHub</h3>
+<small>Code & projects</small>
+</div>
+<span>↗</span>
+</a>
+
+<a id="linkedin" class="card social" href="#" target="_blank">
+<div>
+<h3>in LinkedIn</h3>
+<small>Professional profile</small>
+</div>
+<span>↗</span>
+</a>
+
+</div>
+</div>
+</section>
+
+<section id="contact">
+<div class="container">
+<div class="label">10 — Contact</div>
+<h2 class="title">Let's Connect.</h2>
+<p class="sub">Have an idea? Let's create something cool.</p>
+
+<div class="glass">
+
+<div class="contact">
+
+<div class="contact-box">
+<small>Email</small>
+<span id="contactEmail">Loading...</span>
+</div>
+
+<div class="contact-box">
+<small>Phone / WhatsApp</small>
+<span id="contactPhone">Loading...</span>
+</div>
+
+</div>
+
+<div style="margin-top:25px">
+<a id="emailBtn" href="mailto:" class="btn primary">
+Send Email ↗
+</a>
+</div>
+
+</div>
+</div>
+</section>
+
+<footer>
+© 2026 Farhan Shaikh • Built with code & curiosity.
 </footer>
 
 <script>
-async function loadData(){
-    try{
-        const response = await fetch("/api/data");
-        const data = await response.json();
+const $ = id => document.getElementById(id);
 
-        document.getElementById("name").textContent =
-            data.name || "Farhan Shaikh";
-
-        document.getElementById("aboutText").textContent =
-            data.about || "";
-
-        document.getElementById("instagram").href =
-            data.instagram || "#";
-
-        document.getElementById("instagramTop").href =
-            data.instagram || "#";
-
-        document.getElementById("youtube").href =
-            data.youtube || "#";
-
-        if(data.photo){
-            document.getElementById("profile").src =
-                data.photo + "?t=" + Date.now();
-        }
-    }catch(error){
-        console.log(error);
-    }
+function text(v, fallback = "") {
+  return v === undefined || v === null || v === "" ? fallback : String(v);
 }
 
-loadData();
+function itemTitle(item, fallback) {
+  if (typeof item === "string") return item;
+  return text(
+    item?.title || item?.name || item?.course || item?.service,
+    fallback
+  );
+}
+
+function itemDescription(item) {
+  if (typeof item === "string") return "";
+  return text(item?.description || item?.details || item?.text || "");
+}
+
+function makeCard(title, description = "", extra = "") {
+  const card = document.createElement("div");
+  card.className = "card";
+
+  const h3 = document.createElement("h3");
+  h3.textContent = title;
+  card.appendChild(h3);
+
+  if (description) {
+    const p = document.createElement("p");
+    p.textContent = description;
+    card.appendChild(p);
+  }
+
+  if (extra) {
+    const small = document.createElement("small");
+    small.textContent = extra;
+    card.appendChild(small);
+  }
+
+  return card;
+}
+
+function renderList(id, list, fallback) {
+  const box = $(id);
+  if (!box) return;
+
+  box.replaceChildren();
+
+  const items = Array.isArray(list) && list.length ? list : fallback;
+
+  items.forEach(item => {
+    const title = itemTitle(item, "Creative Work");
+    const desc = itemDescription(item);
+
+    let extra = "";
+
+    if (item && typeof item === "object") {
+      if (item.college) extra += item.college;
+      if (item.year) extra += extra ? " • " + item.year : item.year;
+    }
+
+    box.appendChild(makeCard(title, desc, extra));
+  });
+}
+
+function setLink(id, url) {
+  const el = $(id);
+  if (!el) return;
+
+  if (url) {
+    el.href = url;
+    el.style.display = "";
+  } else {
+    el.href = "#";
+    el.style.opacity = ".45";
+  }
+}
+
+async function loadWebsite() {
+  try {
+    const response = await fetch("/api/full-data", {
+      cache: "no-store"
+    });
+
+    if (!response.ok) throw new Error("Data request failed");
+
+    const data = await response.json();
+
+    const home = data.home || {};
+    const about = data.about || {};
+    const social = data.social || {};
+    const contact = data.contact || {};
+
+    /* HOME */
+    $("name").textContent = text(home.name, "Farhan Shaikh");
+
+    $("heroText").textContent =
+      text(home.headline) ||
+      text(home.about) ||
+      "Developer, creator and technology enthusiast.";
+
+    $("aboutText").textContent =
+      text(about.description) ||
+      text(home.about) ||
+      "Creative developer and technology enthusiast.";
+
+    if (home.photo) {
+      $("profile").src = home.photo;
+    }
+
+    /* SOCIAL */
+    setLink("instagram", social.instagram);
+    setLink("youtube", social.youtube);
+    setLink("github", social.github);
+    setLink("linkedin", social.linkedin);
+
+    setLink("instagramTop", social.instagram);
+
+    /* CONTACT */
+    const email = text(contact.email, "Email not added");
+    const phone = text(contact.phone, "Phone not added");
+
+    $("contactEmail").textContent = email;
+    $("contactPhone").textContent = phone;
+
+    if (contact.email) {
+      $("emailBtn").href = "mailto:" + contact.email;
+    }
+
+    /* SKILLS */
+    renderList(
+      "skillsGrid",
+      data.skills,
+      [
+        "Developer",
+        "Social Media Management",
+        "Video Editing",
+        "Photo Editing",
+        "AI Content Creation",
+        "YouTube Content Creation"
+      ]
+    );
+
+    /* EDUCATION */
+    renderList(
+      "educationGrid",
+      data.education,
+      [
+        {
+          course: "B.Sc Life Science",
+          college: "Maulana Azad National Urdu University",
+          year: "2026–2030"
+        }
+      ]
+    );
+
+    /* PROJECTS */
+    renderList(
+      "projectsGrid",
+      data.projects,
+      [
+        "My Portfolio",
+        "Creative Projects",
+        "AI Experiments"
+      ]
+    );
+
+    /* ACHIEVEMENTS */
+    renderList(
+      "achievementsGrid",
+      data.achievements,
+      [
+        "Learning & Growth"
+      ]
+    );
+
+    /* CERTIFICATES */
+    renderList(
+      "certificatesGrid",
+      data.certificates,
+      [
+        "Certificates"
+      ]
+    );
+
+    /* GALLERY */
+    renderList(
+      "galleryGrid",
+      data.gallery,
+      [
+        "Photos",
+        "Videos",
+        "Creative Work"
+      ]
+    );
+
+    /* SERVICES */
+    renderList(
+      "servicesGrid",
+      data.services,
+      [
+        "Creative Design",
+        "Video Editing",
+        "Web Development"
+      ]
+    );
+
+  } catch (error) {
+    console.error("Portfolio data error:", error);
+  }
+}
+
+/* Smooth navigation */
+document.querySelectorAll('nav a[href^="#"]').forEach(link => {
+  link.addEventListener("click", event => {
+    const target = document.querySelector(link.getAttribute("href"));
+
+    if (target) {
+      event.preventDefault();
+      target.scrollIntoView({
+        behavior: "smooth",
+        block: "start"
+      });
+    }
+  });
+});
+
+/* Scroll reveal */
+const revealObserver = new IntersectionObserver(
+  entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add("show");
+        revealObserver.unobserve(entry.target);
+      }
+    });
+  },
+  { threshold: 0.08 }
+);
+
+document.querySelectorAll(".card, section").forEach(el => {
+  el.style.opacity = "0";
+  el.style.transform = "translateY(25px)";
+  el.style.transition = "opacity .8s ease, transform .8s ease";
+  revealObserver.observe(el);
+});
+
+const revealStyle = document.createElement("style");
+revealStyle.textContent = `
+section.show,
+.card.show {
+  opacity: 1 !important;
+  transform: translateY(0) !important;
+}
+`;
+document.head.appendChild(revealStyle);
+
+/* Cursor liquid glow */
+const cursor = document.createElement("div");
+cursor.className = "cursor-glow";
+document.body.appendChild(cursor);
+
+const cursorStyle = document.createElement("style");
+cursorStyle.textContent = `
+.cursor-glow {
+  position: fixed;
+  width: 180px;
+  height: 180px;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9999;
+  background: radial-gradient(
+    circle,
+    rgba(255,255,255,.13),
+    transparent 65%
+  );
+  transform: translate(-50%, -50%);
+  filter: blur(10px);
+  opacity: 0;
+  transition: opacity .3s ease;
+}
+
+@media (max-width: 700px) {
+  .cursor-glow {
+    display: none;
+  }
+}
+`;
+document.head.appendChild(cursorStyle);
+
+window.addEventListener("pointermove", e => {
+  cursor.style.left = e.clientX + "px";
+  cursor.style.top = e.clientY + "px";
+  cursor.style.opacity = "1";
+});
+
+/* Start */
+loadWebsite();
 </script>
 
 </body>
-
-<style>
-html{scroll-behavior:smooth}
-
-.btn{
-transition:transform .45s cubic-bezier(.22,1,.36,1),box-shadow .45s ease;
-}
-
-.btn:active{
-transform:scale(.93);
-box-shadow:0 5px 25px #0008;
-}
-
-.skill,.social,.card{
-transition:transform .5s cubic-bezier(.22,1,.36,1),box-shadow .5s ease,border-color .3s ease;
-}
-
-.skill:hover,.social:hover{
-transform:translateY(-8px) scale(1.02);
-box-shadow:0 20px 50px #0007;
-border-color:#8175ff;
-}
-
-.hero>div{
-animation:heroEnter 1s cubic-bezier(.22,1,.36,1);
-}
-
-@keyframes heroEnter{
-0%{opacity:0;transform:translateY(45px) scale(.94)}
-70%{transform:translateY(-5px) scale(1.01)}
-100%{opacity:1;transform:translateY(0) scale(1)}
-}
-
-section{
-animation:sectionEnter .8s ease both;
-}
-
-@keyframes sectionEnter{
-from{opacity:0;transform:translateY(25px)}
-to{opacity:1;transform:translateY(0)}
-}
-</style>
+</html>
