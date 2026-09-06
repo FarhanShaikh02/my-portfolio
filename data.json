@@ -1,13 +1,13 @@
 {
   "home": {
     "name": "Farhan Shaikh",
-    "about": "​Hi, I'm Farhan Shaikh 👋\n​Life Science Student | Digital Creator | Storyteller\n\n​Who I Am\n\n​I am a Life Science student at Maulana Azad National Urdu University (MANUU), Hyderabad, originally from Darbhanga, Bihar. My journey is a blend of scientific curiosity, digital creativity, and grounded values. Whether I am learning biological concepts in the lab or creating engaging stories and digital content, I bring passion, discipline, and authenticity to everything I do.\n\n​What I Do\n\n​🔬 Life Science & Research\nMy academic focus is on understanding the fundamental principles of life, including biology, genetics, evolution, and related areas. I enjoy practical learning, laboratory work, and making complex scientific concepts easier to understand.\n\n​🎬 Creative Expression & Media\nBeyond academics, I am passionate about storytelling, creative writing, and digital media. From creating scripts rooted in local culture and humor to producing engaging visual content, I use digital media as a way to express ideas and build my creative identity.\n\n​📈 Personal Growth & Exploration\nI believe in continuous learning and self-improvement. I enjoy exploring digital trends, modern media tools, technology, and new creative ideas while developing my skills along the way.\n\n​My Philosophy\n\n​\"Learning, growing, and trusting the process.\"\n\n​My approach to life is guided by faith, patience (Sabr), and consistent effort. I believe true growth comes from balancing education, creativity, and personal development while staying connected to my roots.\n\n​Let’s Connect\n\n​I am always open to learning, collaborating, exploring creative opportunities, and connecting with fellow science enthusiasts and content creators.",
-    "photo": "/uploads/profile.jpg",
+    "about": "",
+    "photo": "https://cdn.phototourl.com/free/2026-09-04-ede62a39-719d-4686-9f71-03d0a7914c93.jpg",
     "headline": ""
   },
   "about": {
     "title": "About Me",
-    "description": "I'm gay"
+    "description": "Hi, I'm Farhan Shaikh 👋\nLife Sciences Student | Digital Creator | Storyteller\n\nWho I Am\n\nI am a Life Sciences student at Maulana Azad National Urdu University (MANUU), Hyderabad. I enjoy learning about life sciences while also exploring digital creativity, technology, video editing, AI content creation, and storytelling.\n\nWhat I Do\n\n🔬 Life Sciences & Learning\nI enjoy understanding biological concepts, practical learning, and continuously expanding my knowledge.\n\n🎬 Digital Creativity\nI create videos, edit content, explore AI tools, and experiment with new creative ideas.\n\n💻 Technology & Content\nI enjoy exploring modern technology, digital media, social platforms, and new ways to turn ideas into engaging content.\n\nMy Philosophy\n\nLearn. Create. Improve. Repeat.\n\nI believe curiosity, consistency, and creativity are the foundation of personal growth.\n\nLet's Connect\n\nI'm always open to learning, creating, collaborating, and exploring new ideas."
   },
   "skills": [
     "Developer ",
@@ -33,7 +33,7 @@
   },
   "settings": {
     "siteTitle": "FARHAN SHAIKH",
-    "theme": "light"
+    "theme": "dark"
   },
   "education": [
     {
